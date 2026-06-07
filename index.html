@@ -3,1357 +3,1141 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>The Sanctum – Blossom's Medicinal Apothecarium</title>
-  
-  <!-- Tailwind CSS for high-end styling -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  
-  <!-- Google Fonts for botanical styling -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
-  
-  <!-- Lucide Icons -->
-  <script src="https://cdn.jsdelivr.net/npm/lucide@0.383.0/dist/umd/lucide.min.js"></script>
-
-  <style>
-    body {
-      font-family: 'DM Sans', sans-serif;
-    }
-    h1, h2, h3, h4, .serif {
-      font-family: 'Playfair Display', serif;
-    }
-    /* Smooth Scrollbar */
-    ::-webkit-scrollbar {
-      width: 6px;
-      height: 6px;
-    }
-    ::-webkit-scrollbar-track {
-      background: #f5f5f4;
-    }
-    ::-webkit-scrollbar-thumb {
-      background: #cbd5e1;
-      border-radius: 4px;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-      background: #94a3b8;
-    }
-  
-    .tier-locked { filter: blur(4px); pointer-events: none; user-select: none; }
-</style>
-  <!-- PWA Setup -->
+  <title>The Sanctum — Blossom's Botanical Apothecarium</title>
   <meta name="theme-color" content="#1a0033">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="The Sanctum">
-  <link rel="manifest" href='data:application/manifest+json,{"name":"The Sanctum – Blossom's Botanical Apothecarium","short_name":"The Sanctum","start_url":".","display":"standalone","background_color":"#1a0033","theme_color":"#1a0033","description":"Where the wisdom of the earth meets the alchemy of intention.","icons":[{"src":"2021_BMG_LOGO.png","sizes":"any","type":"image/png"}]}'>
-
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.383.0/dist/umd/lucide.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'DM Sans', sans-serif; background: #f5f5f4; color: #1c1917; min-height: 100vh; display: flex; flex-direction: column; }
+    h1, h2, h3, h4, .serif { font-family: 'Playfair Display', serif; }
+ 
+    /* ── SCROLLBAR ── */
+    ::-webkit-scrollbar { width: 5px; height: 5px; }
+    ::-webkit-scrollbar-track { background: #f5f5f4; }
+    ::-webkit-scrollbar-thumb { background: #c4b5fd; border-radius: 4px; }
+ 
+    /* ── LAYOUT ── */
+    .app-wrapper { display: flex; flex: 1; min-height: 100vh; }
+    .sidebar { width: 260px; min-width: 260px; background: #2e1065; color: white; padding: 24px; display: flex; flex-direction: column; justify-content: space-between; }
+    .main { flex: 1; padding: 32px; overflow-y: auto; }
+ 
+    /* ── SIDEBAR ── */
+    .sidebar-brand { display: flex; align-items: center; gap: 12px; padding-bottom: 24px; margin-bottom: 24px; border-bottom: 1px solid rgba(88,28,135,0.4); }
+    .sidebar-icon { width: 44px; height: 44px; background: rgba(126,34,206,0.6); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #e879f9; flex-shrink: 0; }
+    .brand-title { font-family: 'Playfair Display', serif; font-size: 17px; font-weight: 700; color: white; line-height: 1.2; }
+    .brand-sub { font-size: 10px; color: #c084fc; font-weight: 500; line-height: 1.4; margin-top: 2px; }
+    .nav-btn { display: flex; align-items: center; gap: 10px; padding: 11px 14px; border-radius: 12px; font-size: 13px; font-weight: 600; cursor: pointer; border: none; width: 100%; text-align: left; transition: all 0.2s; color: rgba(216,180,254,0.7); background: transparent; margin-bottom: 3px; }
+    .nav-btn:hover { background: rgba(88,28,135,0.5); color: white; }
+    .nav-btn.active { background: #6d28d9; color: white; box-shadow: 0 2px 8px rgba(109,40,217,0.4); }
+    .nav-btn .tier-badge { margin-left: auto; font-size: 8px; font-weight: 700; background: rgba(192,38,211,0.3); color: #e879f9; padding: 2px 6px; border-radius: 8px; letter-spacing: 1px; text-transform: uppercase; }
+    .member-badge { margin-top: 16px; padding: 12px; background: rgba(88,28,135,0.3); border: 1px solid rgba(88,28,135,0.4); border-radius: 12px; font-size: 10px; color: #c084fc; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
+ 
+    /* ── TABS ── */
+    .tab { display: none; }
+    .tab.active { display: block; }
+ 
+    /* ── CARDS ── */
+    .card { background: white; border-radius: 20px; border: 1px solid #e7e5e4; box-shadow: 0 1px 4px rgba(0,0,0,0.06); padding: 24px; margin-bottom: 20px; }
+    .card-grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-bottom: 20px; }
+    .card-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 20px; }
+    .card-grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 20px; }
+ 
+    /* ── METRIC CARDS ── */
+    .metric-card { background: white; border-radius: 16px; border: 1px solid #e7e5e4; padding: 20px; }
+    .metric-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #a8a29e; }
+    .metric-value { font-size: 28px; font-weight: 800; margin-top: 8px; line-height: 1; }
+    .metric-sub { font-size: 10px; margin-top: 6px; }
+ 
+    /* ── BUTTONS ── */
+    .btn-primary { background: linear-gradient(135deg, #6d28d9, #a855f7, #c026d3); color: white; border: none; border-radius: 12px; padding: 10px 20px; font-size: 12px; font-weight: 700; cursor: pointer; letter-spacing: 1px; transition: opacity 0.2s; }
+    .btn-primary:hover { opacity: 0.9; }
+    .btn-sm { padding: 8px 16px; font-size: 11px; }
+    .btn-outline { background: transparent; border: 1px solid #e7e5e4; border-radius: 10px; padding: 8px 14px; font-size: 11px; font-weight: 600; color: #57534e; cursor: pointer; transition: all 0.2s; }
+    .btn-outline:hover { border-color: #a855f7; color: #6d28d9; }
+ 
+    /* ── BADGES ── */
+    .badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+    .badge-purple { background: #f3e8ff; color: #6d28d9; border: 1px solid #e9d5ff; }
+    .badge-fuchsia { background: #fdf4ff; color: #a21caf; border: 1px solid #f5d0fe; }
+    .badge-amber { background: #fffbeb; color: #92400e; border: 1px solid #fde68a; }
+    .badge-root { background: #fee2e2; color: #991b1b; }
+    .badge-sacral { background: #ffedd5; color: #9a3412; }
+    .badge-solar { background: #fef9c3; color: #854d0e; }
+    .badge-heart { background: #dcfce7; color: #166534; }
+    .badge-throat { background: #dbeafe; color: #1e40af; }
+    .badge-thirdeye { background: #ede9fe; color: #5b21b6; }
+    .badge-crown { background: #faf5ff; color: #7e22ce; }
+ 
+    /* ── INPUTS ── */
+    .input { width: 100%; border: 1px solid #d6d3d1; border-radius: 12px; padding: 12px 16px; font-size: 13px; font-family: 'DM Sans', sans-serif; outline: none; transition: border-color 0.2s; background: #fafaf9; }
+    .input:focus { border-color: #a855f7; box-shadow: 0 0 0 3px rgba(168,85,247,0.1); }
+    .input-dark { background: rgba(255,255,255,0.1); border: 1px solid rgba(168,85,247,0.3); border-radius: 12px; padding: 12px 16px; font-size: 13px; color: white; outline: none; width: 100%; font-family: 'DM Sans', sans-serif; }
+    .input-dark::placeholder { color: rgba(216,180,254,0.4); }
+    .input-dark:focus { border-color: rgba(232,121,249,0.6); }
+ 
+    /* ── HERB CARDS ── */
+    .herb-card { background: white; border-radius: 20px; border: 1px solid #e7e5e4; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.06); transition: box-shadow 0.2s; cursor: pointer; }
+    .herb-card:hover { box-shadow: 0 4px 20px rgba(109,40,217,0.12); border-color: #d8b4fe; }
+    .herb-card-body { padding: 20px; }
+    .herb-cat { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px; color: #c026d3; margin-bottom: 4px; }
+    .herb-name { font-size: 20px; font-weight: 700; color: #1c1917; margin-bottom: 6px; }
+    .herb-notes { font-size: 11px; color: #78716c; font-style: italic; line-height: 1.5; }
+    .herb-actions { font-size: 11px; color: #57534e; line-height: 1.5; margin-top: 8px; }
+    .herb-card-footer { padding: 14px 20px; border-top: 1px solid #f5f5f4; display: flex; align-items: center; justify-content: space-between; background: #fafaf9; }
+ 
+    /* ── DRAWER ── */
+    .drawer { position: fixed; top: 0; right: 0; width: 100%; max-width: 520px; height: 100%; background: white; box-shadow: -4px 0 30px rgba(0,0,0,0.15); z-index: 9998; display: flex; flex-direction: column; transform: translateX(100%); transition: transform 0.3s ease; }
+    .drawer.open { transform: translateX(0); }
+    .drawer-header { background: #2e1065; color: white; padding: 24px; position: relative; flex-shrink: 0; }
+    .drawer-close { position: absolute; top: 16px; right: 16px; background: rgba(255,255,255,0.1); border: none; border-radius: 50%; width: 32px; height: 32px; color: white; cursor: pointer; font-size: 18px; display: flex; align-items: center; justify-content: center; }
+    .drawer-body { flex: 1; overflow-y: auto; padding: 24px; }
+    .drawer-section { margin-bottom: 20px; }
+    .drawer-label { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: #a8a29e; display: block; margin-bottom: 8px; }
+    .drawer-text { font-size: 12px; line-height: 1.6; color: #57534e; }
+    .drawer-warning { background: #fffbeb; border: 1px solid #fde68a; border-radius: 12px; padding: 16px; margin-bottom: 20px; }
+    .drawer-constituents { background: #fafaf9; border: 1px solid #e7e5e4; border-radius: 10px; padding: 12px; font-size: 12px; font-weight: 600; color: #1c1917; line-height: 1.6; }
+    .drawer-contra { background: #fff1f2; border: 1px solid #fecdd3; border-radius: 10px; padding: 12px; font-size: 12px; font-weight: 600; color: #be123c; line-height: 1.6; }
+    .drawer-footer { padding: 16px 24px; border-top: 1px solid #e7e5e4; background: #fafaf9; display: flex; align-items: center; justify-content: flex-end; flex-shrink: 0; }
+    .backdrop { position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 9997; display: none; }
+ 
+    /* ── GATE OVERLAY ── */
+    .gate-overlay { background: linear-gradient(135deg, #1e0a3c, #2d0757); border-radius: 20px; padding: 48px 32px; text-align: center; margin-bottom: 20px; }
+    .gate-title { font-family: 'Playfair Display', serif; color: white; font-size: 28px; font-weight: 700; margin: 12px 0 8px; }
+    .gate-desc { color: rgba(216,180,254,0.7); font-size: 13px; line-height: 1.6; max-width: 360px; margin: 0 auto 24px; }
+    .gate-input-wrap { max-width: 320px; margin: 0 auto; }
+ 
+    /* ── TEASER CARDS ── */
+    .teaser-card { border-radius: 20px; padding: 28px; position: relative; overflow: hidden; }
+    .teaser-elixir { background: linear-gradient(135deg, #1a0033 0%, #2d0057 60%, #1a0a2e 100%); }
+    .teaser-challenge { background: linear-gradient(135deg, #0a0a1e 0%, #1a1045 60%, #0f0520 100%); }
+    .teaser-tag { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 3px; color: #e879f9; margin-bottom: 8px; display: block; }
+    .teaser-title { font-family: 'Playfair Display', serif; color: white; font-size: 22px; font-weight: 700; margin-bottom: 10px; line-height: 1.3; }
+    .teaser-desc { color: rgba(216,180,254,0.6); font-size: 12px; line-height: 1.6; margin-bottom: 20px; }
+    .teaser-form { display: flex; gap: 8px; }
+    .teaser-form input { flex: 1; background: rgba(255,255,255,0.1); border: 1px solid rgba(168,85,247,0.3); border-radius: 10px; padding: 10px 14px; color: white; font-size: 12px; outline: none; font-family: 'DM Sans', sans-serif; }
+    .teaser-form input::placeholder { color: rgba(216,180,254,0.4); }
+    .teaser-success { color: #e879f9; font-size: 11px; font-weight: 600; margin-top: 8px; display: none; }
+    .teaser-cta { color: rgba(168,85,247,0.4); font-size: 10px; margin-top: 8px; }
+ 
+    /* ── COMING SOON CARDS ── */
+    .coming-card { background: white; border-radius: 16px; border: 1px solid #ede9fe; padding: 20px; position: relative; overflow: hidden; }
+    .coming-badge { position: absolute; top: 12px; right: 12px; font-size: 8px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; padding: 3px 8px; border-radius: 20px; }
+    .coming-badge-fuchsia { background: #c026d3; color: white; }
+    .coming-badge-purple { background: #6d28d9; color: white; }
+ 
+    /* ── CHAKRA CARDS ── */
+    .chakra-card { border-radius: 16px; padding: 20px; border: 1px solid; }
+    .chakra-root { background: #fff1f2; border-color: #fecdd3; }
+    .chakra-sacral { background: #fff7ed; border-color: #fed7aa; }
+    .chakra-solar { background: #fefce8; border-color: #fef08a; }
+ 
+    /* ── DRUG INTERACTION ── */
+    .drug-card { background: white; border-radius: 16px; border: 1px solid #e7e5e4; padding: 20px; margin-bottom: 16px; }
+    .interaction-row { background: #fafaf9; border-radius: 12px; border: 1px solid #e7e5e4; padding: 14px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+    .severity-major { background: #fee2e2; color: #991b1b; border: 1px solid #fecaca; font-size: 10px; font-weight: 700; padding: 4px 10px; border-radius: 8px; text-transform: uppercase; white-space: nowrap; }
+    .severity-moderate { background: #fffbeb; color: #92400e; border: 1px solid #fde68a; font-size: 10px; font-weight: 700; padding: 4px 10px; border-radius: 8px; text-transform: uppercase; white-space: nowrap; }
+    .severity-minor { background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; font-size: 10px; font-weight: 700; padding: 4px 10px; border-radius: 8px; text-transform: uppercase; white-space: nowrap; }
+ 
+    /* ── ENTRANCE FLOW ── */
+    .entrance { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 9999; overflow-y: auto; }
+    .entrance-step { min-height: 100vh; display: none; flex-direction: column; align-items: center; justify-content: center; padding: 32px 24px; background: linear-gradient(160deg, #1a0033 0%, #2d0057 40%, #0a0015 100%); }
+    .entrance-step.active { display: flex; }
+    .entrance-card { width: 100%; max-width: 440px; }
+    .entrance-divider { display: flex; align-items: center; gap: 12px; margin: 20px 0; }
+    .entrance-divider-line { flex: 1; height: 1px; background: linear-gradient(to right, transparent, rgba(192,38,211,0.5)); }
+    .entrance-divider-line.rev { background: linear-gradient(to left, transparent, rgba(192,38,211,0.5)); }
+    .gate-form-card { background: rgba(255,255,255,0.05); border: 1px solid rgba(168,85,247,0.2); border-radius: 24px; padding: 28px; }
+    .disclaimer-box { display: flex; align-items: flex-start; gap: 10px; padding: 14px; background: rgba(255,255,255,0.05); border: 1px solid rgba(168,85,247,0.2); border-radius: 12px; margin-bottom: 16px; }
+    .disclaimer-box input[type="checkbox"] { margin-top: 2px; flex-shrink: 0; width: 16px; height: 16px; accent-color: #c026d3; cursor: pointer; }
+    .disclaimer-box label { color: rgba(216,180,254,0.7); font-size: 11px; line-height: 1.6; cursor: pointer; }
+ 
+    /* ── PWA BANNER ── */
+    .pwa-banner { position: fixed; bottom: 0; left: 0; right: 0; z-index: 9996; padding: 12px 16px; background: linear-gradient(135deg, #1a0033, #2d0057); display: none; }
+    .pwa-inner { max-width: 500px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 16px; background: rgba(255,255,255,0.08); border: 1px solid rgba(168,85,247,0.3); border-radius: 16px; padding: 14px 16px; }
+ 
+    /* ── QA ── */
+    .qa-dot { position: fixed; bottom: 8px; left: 8px; z-index: 99999; width: 12px; height: 12px; border-radius: 50%; background: rgba(168,85,247,0.12); border: 1px solid rgba(168,85,247,0.2); cursor: pointer; }
+ 
+    /* ── UTILITIES ── */
+    .purple-gradient { background: linear-gradient(135deg, #7e22ce, #a855f7, #c026d3); }
+    .text-fuchsia { color: #e879f9; }
+    .text-purple { color: #a855f7; }
+    .text-muted { color: #78716c; }
+    .hero-gradient { background: linear-gradient(135deg, #2e1065, #1e0a3c); }
+    .search-wrap { position: relative; }
+    .search-icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: #a8a29e; pointer-events: none; }
+ 
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .app-wrapper { flex-direction: column; }
+      .sidebar { width: 100%; min-width: unset; padding: 12px 16px; flex-direction: row; align-items: center; justify-content: flex-start; gap: 0; }
+      .sidebar-brand { padding-bottom: 0; margin-bottom: 0; border-bottom: none; border-right: 1px solid rgba(88,28,135,0.4); padding-right: 16px; margin-right: 12px; }
+      .sidebar nav { display: flex; flex-direction: row; overflow-x: auto; gap: 4px; flex: 1; }
+      .sidebar .member-badge { display: none; }
+      .nav-btn { white-space: nowrap; padding: 8px 12px; font-size: 12px; }
+      .main { padding: 16px; }
+      .card-grid-2, .card-grid-3, .card-grid-4 { grid-template-columns: repeat(2, 1fr); }
+      .teaser-form { flex-direction: column; }
+      .drawer { max-width: 100%; }
+    }
+    @media (max-width: 480px) {
+      .card-grid-2, .card-grid-3, .card-grid-4 { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
-<body class="bg-stone-100 text-stone-900 min-h-screen flex flex-col antialiased">
-
-  <!-- EMERGENCY CLINICAL WARNING BANNER -->
-  <div class="bg-amber-800 text-white py-2 px-4 text-center text-xs md:text-sm font-semibold flex items-center justify-center gap-2 shadow-sm z-50">
-    <i data-lucide="alert-triangle" class="w-4 h-4 animate-pulse"></i>
-    <span>THE SANCTUM · BLOSSOM'S MEDICINAL APOTHECARIUM</span>
+<body>
+ 
+<!-- ═══════════════════════════════════════════
+     ENTRANCE FLOW
+═══════════════════════════════════════════ -->
+<div class="entrance" id="entrance">
+ 
+  <!-- STEP 1: SPLASH -->
+  <div class="entrance-step active" id="stepSplash">
+    <div class="entrance-card" style="text-align:center;">
+      <img src="2021_BMG_LOGO.png" alt="Blossom's Medicinal Gardens"
+           onerror="this.style.display='none'"
+           style="width:180px;margin:0 auto 20px;display:block;">
+      <div class="entrance-divider">
+        <div class="entrance-divider-line"></div>
+        <span class="text-fuchsia" style="font-size:18px;">✦</span>
+        <div class="entrance-divider-line rev"></div>
+      </div>
+      <p class="text-fuchsia" style="font-size:10px;font-weight:700;letter-spacing:4px;text-transform:uppercase;margin-bottom:10px;">Welcome to</p>
+      <h1 class="serif" style="color:white;font-size:44px;font-weight:900;margin-bottom:8px;text-shadow:0 0 40px rgba(192,38,211,0.4);">The Inner Sanctum</h1>
+      <p style="color:rgba(216,180,254,0.7);font-size:14px;margin-bottom:6px;font-weight:500;">Blossom's Botanical Apothecarium</p>
+      <p style="color:rgba(216,180,254,0.4);font-size:12px;font-style:italic;margin-bottom:32px;">"Where the wisdom of the earth meets the alchemy of intention."</p>
+      <button onclick="showStep('stepGate')" class="btn-primary" style="width:100%;padding:16px;font-size:13px;letter-spacing:3px;border-radius:16px;">
+        ✦ &nbsp; Enter The Sanctum &nbsp; ✦
+      </button>
+      <p style="color:rgba(168,85,247,0.3);font-size:9px;margin-top:16px;line-height:1.7;padding:0 8px;">
+        By entering The Sanctum you acknowledge that all content is for educational purposes only and does not constitute medical advice. Always consult a qualified healthcare provider.
+      </p>
+    </div>
   </div>
-
-  <!-- ENTRANCE FLOW -->
-  <div id="sanctumEntrance" style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:9999;overflow-y:auto;">
-
-    <!-- STEP 1: SPLASH -->
-    <div id="stepSplash" style="min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;background:linear-gradient(160deg,#1a0033 0%,#2d0057 40%,#0a0015 100%);">
-      <div style="width:100%;max-width:420px;text-align:center;">
-        <img src="https://theblossomeffect.github.io/the-sanctum/2021_BMG_LOGO.png" 
-             onerror="this.style.display='none'"
-             style="width:200px;margin:0 auto 24px;display:block;"/>
-        <div style="display:flex;align-items:center;gap:12px;margin-bottom:24px;">
-          <div style="flex:1;height:1px;background:linear-gradient(to right,transparent,rgba(192,38,211,0.5));"></div>
-          <span style="color:#e879f9;font-size:18px;">✦</span>
-          <div style="flex:1;height:1px;background:linear-gradient(to left,transparent,rgba(192,38,211,0.5));"></div>
+ 
+  <!-- STEP 2: EMAIL GATE -->
+  <div class="entrance-step" id="stepGate">
+    <div class="entrance-card">
+      <div style="text-align:center;margin-bottom:28px;">
+        <p class="text-fuchsia" style="font-size:10px;font-weight:700;letter-spacing:4px;text-transform:uppercase;margin-bottom:8px;">You are entering</p>
+        <h2 class="serif" style="color:white;font-size:32px;font-weight:700;margin-bottom:6px;">The Inner Sanctum</h2>
+        <p style="color:rgba(216,180,254,0.5);font-size:12px;font-style:italic;">Reserve your seat at the apothecary table</p>
+      </div>
+      <div class="gate-form-card">
+        <div style="margin-bottom:18px;">
+          <label style="display:block;color:#e879f9;font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;margin-bottom:8px;">Your Email</label>
+          <input class="input-dark" type="email" id="gateEmail" placeholder="hello@youremail.com">
         </div>
-        <p style="color:#e879f9;font-size:11px;font-weight:700;letter-spacing:4px;text-transform:uppercase;margin-bottom:8px;">Welcome to</p>
-        <h1 style="font-family:'Playfair Display',serif;color:white;font-size:42px;font-weight:900;margin-bottom:8px;text-shadow:0 0 40px rgba(192,38,211,0.4);">The Inner Sanctum</h1>
-        <p style="color:rgba(216,180,254,0.7);font-size:14px;margin-bottom:8px;">Blossom's Botanical Apothecarium</p>
-        <p style="color:rgba(216,180,254,0.4);font-size:12px;font-style:italic;margin-bottom:32px;">"Where the wisdom of the earth meets the alchemy of intention."</p>
-        <button onclick="showStep('stepGate')" 
-                style="width:100%;padding:16px;border-radius:16px;border:none;background:linear-gradient(135deg,#7e22ce,#a855f7,#c026d3);color:white;font-size:14px;font-weight:700;letter-spacing:3px;cursor:pointer;box-shadow:0 0 30px rgba(168,85,247,0.4);">
-          ✦ &nbsp; Enter The Sanctum &nbsp; ✦
+        <div style="margin-bottom:18px;">
+          <label style="display:block;color:#e879f9;font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;margin-bottom:8px;">Your First Name</label>
+          <input class="input-dark" type="text" id="gateName" placeholder="First name">
+        </div>
+        <div style="margin-bottom:20px;">
+          <label style="display:block;color:#e879f9;font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;margin-bottom:8px;">What shall we call you in The Sanctum?</label>
+          <input class="input-dark" type="text" id="gateSanctumName" placeholder="e.g. The Alchemist, Sage, Luna...">
+          <p style="color:rgba(168,85,247,0.4);font-size:10px;margin-top:6px;font-style:italic;">This is how you'll be welcomed home each time you return.</p>
+        </div>
+        <div class="disclaimer-box" style="margin-bottom:16px;">
+          <input type="checkbox" id="disclaimerCheck">
+          <label for="disclaimerCheck">I understand that all information within The Sanctum is for <strong style="color:rgba(232,121,249,0.9);">educational purposes only</strong> and does not constitute medical advice. I will consult a qualified healthcare provider before making health decisions.</label>
+        </div>
+        <div id="gateError" style="display:none;color:#fca5a5;font-size:12px;text-align:center;margin-bottom:12px;padding:10px;background:rgba(239,68,68,0.1);border-radius:10px;"></div>
+        <button onclick="submitGate()" class="btn-primary" style="width:100%;padding:14px;font-size:12px;letter-spacing:2px;border-radius:14px;">
+          ✦ &nbsp; Claim My Invitation
         </button>
-        <p style="color:rgba(168,85,247,0.3);font-size:10px;margin-top:16px;">The Blossom Collective · Members Portal</p>
-      </div>
-    </div>
-
-    <!-- STEP 2: EMAIL GATE -->
-    <div id="stepGate" style="min-height:100vh;display:none;flex-direction:column;align-items:center;justify-content:center;padding:24px;background:linear-gradient(160deg,#1a0033 0%,#2d0057 40%,#0a0015 100%);">
-      <div style="width:100%;max-width:420px;">
-        <div style="text-align:center;margin-bottom:32px;">
-          <p style="color:#e879f9;font-size:11px;font-weight:700;letter-spacing:4px;text-transform:uppercase;margin-bottom:8px;">You are entering</p>
-          <h2 style="font-family:'Playfair Display',serif;color:white;font-size:32px;font-weight:900;margin-bottom:8px;">The Inner Sanctum</h2>
-          <p style="color:rgba(216,180,254,0.5);font-size:12px;font-style:italic;">Reserve your seat at the apothecary table</p>
-        </div>
-        <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(168,85,247,0.2);border-radius:24px;padding:32px;">
-          <div style="margin-bottom:20px;">
-            <label style="color:#e879f9;font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;display:block;margin-bottom:8px;">Your Email</label>
-            <input type="email" id="gateEmail" placeholder="hello@youremail.com"
-              style="width:100%;background:rgba(255,255,255,0.1);border:1px solid rgba(168,85,247,0.3);border-radius:12px;padding:12px 16px;color:white;font-size:14px;outline:none;box-sizing:border-box;"
-              onfocus="this.style.borderColor='rgba(232,121,249,0.6)'"
-              onblur="this.style.borderColor='rgba(168,85,247,0.3)'"/>
-          </div>
-          <div style="margin-bottom:20px;">
-            <label style="color:#e879f9;font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;display:block;margin-bottom:8px;">Your First Name</label>
-            <input type="text" id="gateName" placeholder="First name"
-              style="width:100%;background:rgba(255,255,255,0.1);border:1px solid rgba(168,85,247,0.3);border-radius:12px;padding:12px 16px;color:white;font-size:14px;outline:none;box-sizing:border-box;"
-              onfocus="this.style.borderColor='rgba(232,121,249,0.6)'"
-              onblur="this.style.borderColor='rgba(168,85,247,0.3)'"/>
-          </div>
-          <div style="margin-bottom:24px;">
-            <label style="color:#e879f9;font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;display:block;margin-bottom:8px;">What shall we call you in The Sanctum?</label>
-            <input type="text" id="gateSanctumName" placeholder="e.g. The Alchemist, Sage, Luna..."
-              style="width:100%;background:rgba(255,255,255,0.1);border:1px solid rgba(168,85,247,0.3);border-radius:12px;padding:12px 16px;color:white;font-size:14px;outline:none;box-sizing:border-box;"
-              onfocus="this.style.borderColor='rgba(232,121,249,0.6)'"
-              onblur="this.style.borderColor='rgba(168,85,247,0.3)'"/>
-            <p style="color:rgba(168,85,247,0.4);font-size:10px;margin-top:6px;font-style:italic;">This is how you'll be welcomed home each time you return.</p>
-          </div>
-          <div id="gateError" style="display:none;color:#fca5a5;font-size:12px;text-align:center;margin-bottom:12px;"></div>
-          <button onclick="submitGate()"
-            style="width:100%;padding:14px;border-radius:14px;border:none;background:linear-gradient(135deg,#7e22ce,#a855f7,#c026d3);color:white;font-size:13px;font-weight:700;letter-spacing:3px;cursor:pointer;box-shadow:0 0 20px rgba(168,85,247,0.3);">
-            ✦ &nbsp; Claim My Invitation
-          </button>
-          <p style="color:rgba(168,85,247,0.3);font-size:10px;text-align:center;margin-top:12px;">By entering you join The Blossom Collective. We honor your inbox. No spam, ever.</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- STEP 3: WELCOME -->
-    <div id="stepWelcome" style="min-height:100vh;display:none;flex-direction:column;align-items:center;justify-content:center;padding:24px;background:linear-gradient(160deg,#1a0033 0%,#2d0057 40%,#0a0015 100%);">
-      <div style="text-align:center;max-width:360px;">
-        <div style="font-size:56px;margin-bottom:24px;">🌿</div>
-        <p style="color:#e879f9;font-size:11px;font-weight:700;letter-spacing:4px;text-transform:uppercase;margin-bottom:12px;">Welcome home</p>
-        <h2 id="welcomeNameDisplay" style="font-family:'Playfair Display',serif;color:white;font-size:36px;font-weight:900;margin-bottom:12px;text-shadow:0 0 40px rgba(192,38,211,0.4);"></h2>
-        <p style="color:rgba(216,180,254,0.6);font-size:14px;line-height:1.6;font-style:italic;margin-bottom:32px;">The Sanctum is now open to you.<br>The medicine has been waiting.</p>
-        <div style="display:flex;align-items:center;gap:12px;justify-content:center;margin-bottom:32px;">
-          <div style="width:60px;height:1px;background:linear-gradient(to right,transparent,rgba(192,38,211,0.5));"></div>
-          <span style="color:#e879f9;">✦</span>
-          <div style="width:60px;height:1px;background:linear-gradient(to left,transparent,rgba(192,38,211,0.5));"></div>
-        </div>
-        <button onclick="enterApp()"
-          style="width:100%;padding:16px;border-radius:16px;border:none;background:linear-gradient(135deg,#7e22ce,#a855f7,#c026d3);color:white;font-size:14px;font-weight:700;letter-spacing:3px;cursor:pointer;box-shadow:0 0 30px rgba(168,85,247,0.4);">
-          Enter The Sanctum →
-        </button>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- PWA INSTALL BANNER -->
-  <div id="installBanner" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:40;padding:16px;background:linear-gradient(135deg,#1a0033,#2d0057);">
-    <div style="max-width:500px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px;background:rgba(255,255,255,0.1);border:1px solid rgba(168,85,247,0.3);border-radius:16px;padding:16px;">
-      <div style="display:flex;align-items:center;gap:12px;">
-        <span style="font-size:24px;">🌿</span>
-        <div>
-          <p style="color:white;font-size:12px;font-weight:700;margin:0;">Install The Sanctum</p>
-          <p style="color:rgba(216,180,254,0.6);font-size:10px;margin:0;">Add to your home screen for instant access</p>
-        </div>
-      </div>
-      <div style="display:flex;gap:8px;">
-        <button onclick="dismissInstall()" style="color:rgba(168,85,247,0.5);font-size:11px;padding:6px 12px;border-radius:10px;border:1px solid rgba(168,85,247,0.2);background:transparent;cursor:pointer;">Later</button>
-        <button onclick="installApp()" style="color:white;font-size:11px;font-weight:700;padding:6px 16px;border-radius:10px;border:none;background:linear-gradient(135deg,#7e22ce,#c026d3);cursor:pointer;">Install</button>
+        <p style="color:rgba(168,85,247,0.3);font-size:10px;text-align:center;margin-top:12px;">By entering you join The Blossom Collective. We honor your inbox.</p>
       </div>
     </div>
   </div>
-
-  <!-- APPLICATION CONTAINER -->
-  <div class="flex-1 flex flex-col md:flex-row">
-    
-    <!-- SIDEBAR NAVIGATION -->
-    <aside class="w-full md:w-64 bg-purple-950 text-white md:p-6 flex flex-col justify-between shadow-inner border-r border-purple-900">
-      <div>
-        <div class="p-4 md:p-0 flex items-center gap-3 border-b border-purple-900/50 md:pb-6 md:mb-6">
-          <div class="p-2 bg-purple-800/80 rounded-xl text-fuchsia-300">
-            <i data-lucide="leaf" class="w-6 h-6"></i>
-          </div>
-          <div>
-            <h1 class="text-lg font-extrabold tracking-tight">The Sanctum</h1>
-            <p class="text-xs text-fuchsia-400 font-medium leading-snug">Blossom's Medicinal<br>Apothecarium</p>
-          </div>
-        </div>
-
-        <!-- NAV BUTTONS -->
-        <nav class="flex flex-row md:flex-col overflow-x-auto md:overflow-x-visible p-2 md:p-0 gap-1 md:space-y-1">
-          <button onclick="switchTab('dashboard')" id="tabBtn-dashboard" class="nav-btn flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold whitespace-nowrap transition-all bg-purple-800 text-white shadow-md">
-            <i data-lucide="layers" class="w-4 h-4"></i>
-            <span>Dashboard</span>
-          </button>
-          <button onclick="switchTab('shop')" id="tabBtn-shop" class="nav-btn flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold whitespace-nowrap transition-all text-purple-200/80 hover:bg-purple-900 hover:text-white">
-            <i data-lucide="shopping-bag" class="w-4 h-4"></i>
-            <span>Bulk Herb Shop</span>
-          </button>
-          <button onclick="switchTab('monographs')" id="tabBtn-monographs" class="nav-btn flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold whitespace-nowrap transition-all text-purple-200/80 hover:bg-purple-900 hover:text-white">
-            <i data-lucide="book-open" class="w-4 h-4"></i>
-            <span>Herb Monographs</span>
-          </button>
-
-          <button onclick="checkTierAccess(2, 'interaction')" id="tabBtn-interaction" class="nav-btn flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold whitespace-nowrap transition-all text-purple-200/80 hover:bg-purple-900 hover:text-white">
-            <i data-lucide="pill" class="w-4 h-4"></i>
-            <span>Drug Cross-Reference</span>
-            <span class="ml-auto text-[9px] bg-fuchsia-600/30 text-fuchsia-300 px-1.5 py-0.5 rounded-md font-bold">COLLECTIVE</span>
-          </button>
-        </nav>
+ 
+  <!-- STEP 3: WELCOME -->
+  <div class="entrance-step" id="stepWelcome">
+    <div class="entrance-card" style="text-align:center;">
+      <div style="font-size:60px;margin-bottom:24px;">🌿</div>
+      <p class="text-fuchsia" style="font-size:10px;font-weight:700;letter-spacing:4px;text-transform:uppercase;margin-bottom:10px;">Welcome home</p>
+      <h2 class="serif" id="welcomeNameDisplay" style="color:white;font-size:38px;font-weight:900;margin-bottom:12px;text-shadow:0 0 40px rgba(192,38,211,0.4);"></h2>
+      <p style="color:rgba(216,180,254,0.6);font-size:14px;line-height:1.7;font-style:italic;margin-bottom:32px;">The Sanctum is now open to you.<br>The medicine has been waiting.</p>
+      <div class="entrance-divider">
+        <div class="entrance-divider-line" style="max-width:80px;"></div>
+        <span class="text-fuchsia">✦</span>
+        <div class="entrance-divider-line rev" style="max-width:80px;"></div>
       </div>
-
-      <div class="hidden md:block p-4 bg-purple-900/30 rounded-2xl border border-purple-900/50 mt-10">
-        <h4 class="text-xs font-bold uppercase text-fuchsia-400 tracking-wider mb-1 flex items-center gap-1">
-          <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> Angel Alignment Active
-        </h4>
-        <p class="text-[11px] text-emerald-200/70 leading-relaxed">
-          Explore pricing margins based on celestial numbers ($7.77, $11.11). Swap tabs or toggle metrics view anytime.
-        </p>
-      </div>
-    </aside>
-
-    <!-- MAIN DISPLAY WORKSPACE -->
-    <main class="flex-1 p-4 md:p-8 overflow-y-auto max-w-6xl">
-
-      <!-- ==========================================
-           TAB: DASHBOARD
-           ========================================== -->
-      <section id="tab-dashboard" class="tab-content space-y-6">
-        <!-- BRANDING BRIEF -->
-        <div class="bg-gradient-to-br from-purple-950 to-violet-950 rounded-3xl p-6 md:p-8 text-white shadow-lg relative overflow-hidden">
-          <div class="relative z-10 max-w-xl space-y-3">
-            <span class="text-xs font-bold uppercase tracking-widest text-fuchsia-400 bg-emerald-900/60 px-3 py-1 rounded-full">Blossom's Medicinal Apothecarium</span>
-            <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight">The Sanctum</h2>
-            <p class="text-purple-100 text-sm md:text-base leading-relaxed">
-              Your sacred botanical directory — chakra-aligned herbs, deep plant medicine wisdom, and a community rooted in intentional healing. Everything you need to begin your wellness journey lives here.
-            </p>
-          </div>
-        </div>
-
-        <!-- METRICS -->
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <div class="bg-white p-5 rounded-2xl border border-stone-200 shadow-sm">
-            <span class="text-stone-400 text-xs font-bold uppercase tracking-wide">Botanical Directory</span>
-            <h3 class="text-3xl font-extrabold text-stone-800 mt-2">11 Herbs</h3>
-            <span class="text-[10px] text-stone-500 mt-1 block">Chakra-aligned botanicals</span>
-          </div>
-          <div class="bg-white p-5 rounded-2xl border border-stone-200 shadow-sm">
-            <span class="text-stone-400 text-xs font-bold uppercase tracking-wide">Chakra Paths</span>
-            <h3 class="text-3xl font-extrabold text-purple-700 mt-2">5 Paths</h3>
-            <span class="text-[10px] text-fuchsia-600 font-medium mt-1 block">✦ Root to Third Eye</span>
-          </div>
-          <div class="bg-white p-5 rounded-2xl border border-stone-200 shadow-sm">
-            <span class="text-stone-400 text-xs font-bold uppercase tracking-wide">Moon Aligned</span>
-            <h3 class="text-3xl font-extrabold text-purple-700 mt-2">🌙</h3>
-            <span class="text-[10px] text-purple-600 mt-1 block">New moon cohort starts</span>
-          </div>
-          <div class="bg-white p-5 rounded-2xl border border-stone-200 shadow-sm">
-            <span class="text-stone-400 text-xs font-bold uppercase tracking-wide">Community</span>
-            <h3 class="text-xl font-extrabold text-fuchsia-700 mt-3">The Collective</h3>
-            <span class="text-[10px] text-fuchsia-600 mt-1 block">The Blossom Collective</span>
-          </div>
-        </div>
-
-        <!-- CHAKRA LAYOUTS -->
-        <div class="space-y-4">
-          <h3 class="font-extrabold text-xl text-stone-800">Explore by Chakra</h3>
-          <p class="text-stone-500 text-sm">Each herb in The Sanctum is aligned to a chakra — your body's energy centers. Click a chakra below to browse its herbs and discover the medicine it holds.</p>
-          <div class="grid md:grid-cols-3 gap-4">
-            <div class="bg-red-50/50 p-5 rounded-2xl border border-red-100 space-y-3">
-              <span class="text-xs font-bold bg-red-100 text-red-800 px-2.5 py-1 rounded-full uppercase">🔴 Root Chakra</span>
-              <h4 class="font-bold text-stone-800">Grounding / Structural Support</h4>
-              <p class="text-xs text-stone-600 leading-relaxed">Focuses on building skeletal structure, relieving foundational nervous tension, and anchoring deep blood dynamics.</p>
-              <button onclick="switchTab('shop'); filterChakra('Root');" class="text-xs font-bold text-red-700 flex items-center gap-1 hover:underline">
-                View Root Shop <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
-              </button>
-            </div>
-            <div class="bg-orange-50/50 p-5 rounded-2xl border border-orange-100 space-y-3">
-              <span class="text-xs font-bold bg-orange-100 text-orange-800 px-2.5 py-1 rounded-full uppercase">🟠 Sacral Chakra</span>
-              <h4 class="font-bold text-stone-800">Flow / Endocrine Vitality</h4>
-              <p class="text-xs text-stone-600 leading-relaxed">Addresses creative life force, pelvic circulation, healthy mucosal tissues, and hormone orchestration.</p>
-              <button onclick="switchTab('shop'); filterChakra('Sacral');" class="text-xs font-bold text-orange-700 flex items-center gap-1 hover:underline">
-                View Sacral Shop <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
-              </button>
-            </div>
-            <div class="bg-amber-50/50 p-5 rounded-2xl border border-amber-100 space-y-3">
-              <span class="text-xs font-bold bg-amber-100 text-amber-800 px-2.5 py-1 rounded-full uppercase">🟡 Solar Plexus</span>
-              <h4 class="font-bold text-stone-800">Digestion / Metabolic Fire</h4>
-              <p class="text-xs text-stone-600 leading-relaxed">Fosters gastric hydrochloric power, enzymic conversion, metabolic liver support, and metabolic boundary energy.</p>
-              <button onclick="switchTab('shop'); filterChakra('Solar Plexus');" class="text-xs font-bold text-amber-700 flex items-center gap-1 hover:underline">
-                View Solar Shop <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
-              </button>
-            </div>
-          </div>
-        </div>
-
-
-        <!-- TEASER CTA CARDS -->
-        <div class="grid md:grid-cols-2 gap-6">
-
-          <!-- ELIXIR GARDEN TEASER -->
-          <div class="relative overflow-hidden rounded-3xl p-8 space-y-5"
-               style="background:linear-gradient(135deg,#1a0033 0%,#2d0057 60%,#1a0a2e 100%);">
-            <!-- floating particles -->
-            <div class="absolute top-4 right-8 w-1.5 h-1.5 rounded-full bg-fuchsia-400/30 animate-pulse"></div>
-            <div class="absolute bottom-8 right-16 w-1 h-1 rounded-full bg-purple-300/40 animate-pulse"></div>
-            <div class="absolute top-12 right-4 w-1 h-1 rounded-full bg-green-400/20 animate-pulse"></div>
-
-            <div class="relative z-10 space-y-2">
-              <span class="text-[10px] font-bold uppercase tracking-[0.3em] text-fuchsia-300">Coming Soon</span>
-              <h3 class="text-white text-2xl font-extrabold leading-tight" style="font-family:'Playfair Display',serif">
-                The Elixir Garden 🌿
-              </h3>
-              <p class="text-purple-200/60 text-xs leading-relaxed">
-                A sacred apothecary bar blooming within The Sanctum — chakra-aligned wellness elixirs, botanical tonics, and ritual brews crafted with intention. The garden is being tended. Soon it opens its gates.
-              </p>
-            </div>
-
-            <div class="relative z-10 space-y-2">
-              <div class="flex gap-2">
-                <input 
-                  type="email" 
-                  id="elixirEmail"
-                  placeholder="Your email address..."
-                  class="flex-1 bg-white/10 border border-purple-400/30 focus:border-fuchsia-400 focus:outline-none rounded-xl py-2.5 px-4 text-white placeholder-purple-300/40 text-xs transition-all"
-                />
-                <button onclick="submitTeaserEmail('elixir')"
-                  class="px-4 py-2.5 rounded-xl font-bold text-white text-xs whitespace-nowrap transition-all"
-                  style="background:linear-gradient(135deg,#7e22ce,#c026d3);box-shadow:0 0 15px rgba(168,85,247,0.3)">
-                  Notify Me
-                </button>
-              </div>
-              <div id="elixirSuccess" class="hidden text-fuchsia-300 text-[10px] font-semibold">
-                ✦ You've been added to the list — you'll be the first to know when the Garden Gates open.
-              </div>
-              <p class="text-purple-400/40 text-[10px]">
-                🌿 We'll bring the elixir to you when the Garden Gates open.
-              </p>
-            </div>
-          </div>
-
-          <!-- CHAKRA CHALLENGE TEASER -->
-          <div class="relative overflow-hidden rounded-3xl p-8 space-y-5"
-               style="background:linear-gradient(135deg,#0a0a1e 0%,#1a1045 60%,#0f0520 100%);">
-            <!-- floating particles -->
-            <div class="absolute top-6 right-6 w-2 h-2 rounded-full bg-purple-400/20 animate-pulse"></div>
-            <div class="absolute bottom-10 right-12 w-1 h-1 rounded-full bg-fuchsia-300/30 animate-pulse"></div>
-            <div class="absolute top-16 right-3 w-1.5 h-1.5 rounded-full bg-purple-200/20 animate-pulse"></div>
-
-            <div class="relative z-10 space-y-2">
-              <span class="text-[10px] font-bold uppercase tracking-[0.3em] text-purple-300">Next Cohort Forming</span>
-              <h3 class="text-white text-2xl font-extrabold leading-tight" style="font-family:'Playfair Display',serif">
-                7-Week Chakra Challenge 🌙
-              </h3>
-              <p class="text-purple-200/60 text-xs leading-relaxed">
-                Seven weeks. Seven chakras. One transformational journey through plant medicine, intentional ritual, and energetic alignment — beginning always at the new moon. The next circle is being summoned.
-              </p>
-            </div>
-
-            <div class="relative z-10 space-y-2">
-              <div class="flex gap-2">
-                <input 
-                  type="email" 
-                  id="challengeEmail"
-                  placeholder="Your email address..."
-                  class="flex-1 bg-white/10 border border-purple-400/30 focus:border-fuchsia-400 focus:outline-none rounded-xl py-2.5 px-4 text-white placeholder-purple-300/40 text-xs transition-all"
-                />
-                <button onclick="submitTeaserEmail('challenge')"
-                  class="px-4 py-2.5 rounded-xl font-bold text-white text-xs whitespace-nowrap transition-all"
-                  style="background:linear-gradient(135deg,#3730a3,#7e22ce);box-shadow:0 0 15px rgba(99,90,235,0.3)">
-                  Notify Me
-                </button>
-              </div>
-              <div id="challengeSuccess" class="hidden text-purple-300 text-[10px] font-semibold">
-                ✦ Welcome — you've been added to the list. When the Moon aligns, so will we.
-              </div>
-              <p class="text-purple-400/40 text-[10px]">
-                🌙 When the Moon aligns with the Chakra Challenge, we'll align with you.
-              </p>
-            </div>
-          </div>
-
-        </div>
-
-        <!-- COMING SOON SECTION -->
-        <div class="space-y-4">
-          <div class="flex items-center justify-between">
-            <h3 class="font-extrabold text-xl text-stone-800">Coming Soon to The Inner Sanctum</h3>
-            <span class="text-[10px] font-bold uppercase tracking-wider text-fuchsia-600 bg-fuchsia-50 border border-fuchsia-100 px-3 py-1 rounded-full">Members Only</span>
-          </div>
-          <div class="grid md:grid-cols-3 gap-4">
-
-            <div class="bg-white p-5 rounded-2xl border border-purple-100 space-y-2 relative overflow-hidden">
-              <div class="absolute top-3 right-3 bg-fuchsia-600 text-white text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full">Coming Soon</div>
-              <span class="text-2xl block">🫖</span>
-              <h4 class="font-bold text-stone-800 text-sm pr-16">Dry Ritual Menu</h4>
-              <p class="text-xs text-stone-500 leading-relaxed">The full glycerite & ksheerpak extraction menu — alcohol-free, priced as premium.</p>
-            </div>
-
-            <div class="bg-white p-5 rounded-2xl border border-purple-100 space-y-2 relative overflow-hidden">
-              <div class="absolute top-3 right-3 bg-fuchsia-600 text-white text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full">Coming Soon</div>
-              <span class="text-2xl block">📜</span>
-              <h4 class="font-bold text-stone-800 text-sm pr-16">Formulation Guides</h4>
-              <p class="text-xs text-stone-500 leading-relaxed">Downloadable batch recipes, ratios, and extraction method guides from the apothecary.</p>
-            </div>
-
-            <div class="bg-white p-5 rounded-2xl border border-purple-100 space-y-2 relative overflow-hidden">
-              <div class="absolute top-3 right-3 bg-fuchsia-600 text-white text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full">Coming Soon</div>
-              <span class="text-2xl block">🌕</span>
-              <h4 class="font-bold text-stone-800 text-sm pr-16">Live Challenge Cohorts</h4>
-              <p class="text-xs text-stone-500 leading-relaxed">Join a live 7-Week Chakra Alignment Challenge cohort with The Blossom Collective.</p>
-            </div>
-
-            <div class="bg-white p-5 rounded-2xl border border-purple-100 space-y-2 relative overflow-hidden">
-              <div class="absolute top-3 right-3 bg-purple-800 text-white text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full">Inner Sanctum</div>
-              <span class="text-2xl block">💜</span>
-              <h4 class="font-bold text-stone-800 text-sm pr-20">Blossom Collective Space</h4>
-              <p class="text-xs text-stone-500 leading-relaxed">A private community for members — share, learn, and grow together.</p>
-            </div>
-
-            <div class="bg-white p-5 rounded-2xl border border-purple-100 space-y-2 relative overflow-hidden">
-              <div class="absolute top-3 right-3 bg-purple-800 text-white text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full">Inner Sanctum</div>
-              <span class="text-2xl block">⚗️</span>
-              <h4 class="font-bold text-stone-800 text-sm pr-20">Practitioner Portal</h4>
-              <p class="text-xs text-stone-500 leading-relaxed">Wholesale access, bulk pricing, and practitioner-level formulation resources.</p>
-            </div>
-
-            <div class="bg-white p-5 rounded-2xl border border-purple-100 space-y-2 relative overflow-hidden">
-              <div class="absolute top-3 right-3 bg-amber-600 text-white text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full">Free</div>
-              <span class="text-2xl block">🔮</span>
-              <h4 class="font-bold text-stone-800 text-sm pr-16">Angel Pricing Engine</h4>
-              <p class="text-xs text-stone-500 leading-relaxed">Celestial number pricing architecture for your retail launch — live and ready.</p>
-            </div>
-
-          </div>
-        </div>
-
-      </section>
-
-      <!-- ==========================================
-           TAB: BULK HERB SHOP
-           ========================================== -->
-      <section id="tab-shop" class="tab-content space-y-6 hidden">
-        <!-- MODE HEADER -->
-        <div class="bg-white p-6 rounded-3xl border border-stone-200 shadow-sm">
-          <h2 class="text-2xl font-bold text-stone-800">Bulk Herb Shop</h2>
-          <p class="text-stone-500 text-sm mt-1">Browse our chakra-aligned botanical directory. Select your herbs and explore their medicine.</p>
-        </div>
-
-        <!-- SHOP FILTERS -->
-        <div class="bg-white p-6 rounded-3xl border border-stone-200 shadow-sm flex flex-col md:flex-row gap-4 justify-between">
-          <div class="relative flex-1">
-            <i data-lucide="search" class="absolute left-4 top-1/2 -translate-y-1/2 text-stone-400 w-5 h-5"></i>
-            <input 
-              type="text" 
-              id="shopSearch"
-              placeholder="Search master botanical directory..." 
-              class="w-full bg-stone-50 border border-stone-200 focus:border-purple-500 focus:ring-1 focus:ring-purple-500 focus:outline-none rounded-2xl py-3.5 pl-12 pr-4 text-sm transition-all"
-              oninput="renderShop()" onchange="renderShop()" onkeyup="renderShop()"
-            />
-          </div>
-          <div class="flex gap-2">
-            <div class="relative">
-              <select 
-                id="shopChakraFilter"
-                onchange="renderShop()"
-                class="appearance-none bg-stone-50 border border-stone-200 rounded-2xl py-3 px-4 pr-10 text-sm font-semibold text-stone-700 focus:outline-none focus:border-purple-500"
-              >
-                <option value="All">All Chakras</option>
-                <option value="Root">Root</option>
-                <option value="Sacral">Sacral</option>
-                <option value="Solar Plexus">Solar Plexus</option>
-                <option value="Heart">Heart</option>
-                <option value="Third Eye">Third Eye</option>
-              </select>
-              <i data-lucide="chevron-down" class="absolute right-3.5 top-1/2 -translate-y-1/2 text-stone-400 pointer-events-none w-4 h-4"></i>
-            </div>
-          </div>
-        </div>
-
-        <!-- RETAIL SHOP CARDS CONTAINER -->
-        <div id="shopCardsGrid" class="grid md:grid-cols-2 gap-6">
-          <!-- Dynamic cards rendered by JS -->
-        </div>
-      </section>
-
-      <!-- ==========================================
-           TAB: MONOGRAPHS
-           ========================================== -->
-      <section id="tab-monographs" class="tab-content space-y-6 hidden">
-        <div class="bg-white p-6 rounded-3xl border border-stone-200 shadow-sm space-y-4">
-          <div class="flex flex-col md:flex-row gap-4 justify-between">
-            <div class="relative flex-1">
-              <i data-lucide="search" class="absolute left-4 top-1/2 -translate-y-1/2 text-stone-400 w-5 h-5"></i>
-              <input 
-                type="text" 
-                id="monographSearch"
-                placeholder="Search herbs, constituents, actions..." 
-                class="w-full bg-stone-50 border border-stone-200 focus:border-purple-500 focus:ring-1 focus:ring-purple-500 focus:outline-none rounded-2xl py-3.5 pl-12 pr-4 text-sm transition-all"
-                oninput="renderMonographs()" onchange="renderMonographs()" onkeyup="renderMonographs()"
-              />
-            </div>
-          </div>
-        </div>
-
-        <div id="monographsGrid" class="grid md:grid-cols-2 gap-6">
-          <!-- Rendered dynamically by JS -->
-        </div>
-      </section>
-
-      <!-- ==========================================
-           TAB: INTERACTION
-           ========================================== -->
-      <section id="tab-interaction" class="tab-content space-y-6 hidden">
-
-        <!-- TIER GATE OVERLAY -->
-        <div id="interactionGate" class="hidden">
-          <div class="bg-gradient-to-br from-purple-950 to-violet-950 rounded-3xl p-10 text-center space-y-5 border border-purple-800/40">
-            <div class="text-4xl">🔮</div>
-            <div>
-              <p class="text-fuchsia-300 text-xs font-bold uppercase tracking-widest mb-2">Blossom Collective Access Required</p>
-              <h3 class="text-white text-2xl font-extrabold mb-2" style="font-family:'Playfair Display',serif">The Medicine Cabinet</h3>
-              <p class="text-purple-200/70 text-sm leading-relaxed max-w-sm mx-auto">The drug-herb interaction engine is reserved for members of The Blossom Collective. Join us — it's free, sacred, and your invitation is waiting.</p>
-            </div>
-            <div class="space-y-3 max-w-xs mx-auto">
-              <input type="text" id="collectiveCodeInput" placeholder="Enter your access code..." 
-                class="w-full bg-white/10 border border-purple-400/30 focus:border-fuchsia-400 focus:outline-none rounded-2xl py-3 px-4 text-white placeholder-purple-300/40 text-sm text-center tracking-widest uppercase transition-all"/>
-              <div id="codeError" class="hidden text-red-300 text-xs"></div>
-              <button onclick="submitAccessCode()" 
-                class="w-full py-3 rounded-2xl font-bold text-white text-sm tracking-widest"
-                style="background:linear-gradient(135deg,#7e22ce,#a855f7,#c026d3);box-shadow:0 0 20px rgba(168,85,247,0.3)">
-                ✦ Unlock Access
-              </button>
-              <button onclick="showEmailGate()" class="text-purple-300/60 text-xs underline hover:text-purple-200 transition-colors">
-                Don't have a code? Join The Blossom Collective
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <!-- ACTUAL CONTENT (shown when unlocked) -->
-        <div id="interactionContent">
-        <div class="bg-white p-6 rounded-3xl border border-stone-200 shadow-sm space-y-4">
-          <div>
-            <h2 class="text-2xl font-bold text-stone-800">Herbalist's Drug-Herb Interaction Checker</h2>
-            <p class="text-stone-500 text-sm mt-1">Cross-reference common pharmaceuticals against our botanical monographs database.</p>
-          </div>
-          
-          <div class="relative">
-            <i data-lucide="search" class="absolute left-4 top-1/2 -translate-y-1/2 text-stone-400 w-5 h-5"></i>
-            <input 
-              type="text" 
-              id="interactionSearch"
-              placeholder="Type drug name (e.g. Warfarin, Lipitor, Zoloft)..." 
-              class="w-full bg-stone-50 border border-stone-200 focus:border-purple-500 focus:ring-1 focus:ring-purple-500 focus:outline-none rounded-2xl py-3.5 pl-12 pr-4 text-sm font-semibold transition-all"
-              oninput="renderInteractions()"
-              onchange="renderInteractions()"
-              onkeyup="renderInteractions()"
-            />
-          </div>
-          <button 
-            onclick="renderInteractions()"
-            class="w-full mt-2 bg-purple-800 hover:bg-purple-900 text-white font-bold py-3 rounded-2xl text-sm tracking-wide transition-all"
-          >
-            ✦ Search Interactions
-          </button>
-          <div class="hidden"><!-- spacer -->
-          </div>
-        </div>
-
-        <div id="interactionsContainer" class="grid gap-4">
-          <!-- Populated dynamically by JS -->
-        </div>
-        </div><!-- end interactionContent -->
-      </section>
-
-    </main>
-  </div>
-
-  <!-- SLIDING MONOGRAPH DRAWER -->
-  <div id="monographDrawer" class="fixed inset-y-0 right-0 w-full max-w-xl bg-white shadow-2xl z-50 flex flex-col justify-between border-l border-stone-200 transform translate-x-full transition-transform duration-300">
-    <div class="overflow-y-auto flex-1">
-      <div class="bg-purple-900 text-white p-6 relative">
-        <button onclick="closeMonographDrawer()" class="absolute right-4 top-4 p-2 bg-purple-950/40 hover:bg-purple-950/60 rounded-full text-white">
-          <i data-lucide="x" class="w-5 h-5"></i>
-        </button>
-        <div class="space-y-2 mt-4">
-          <span id="drawerChakraBadge" class="text-[10px] font-bold uppercase tracking-wider text-fuchsia-300 bg-emerald-850/80 px-2.5 py-1 rounded-md"></span>
-          <h3 id="drawerHerbName" class="text-2xl font-extrabold"></h3>
-          <p id="drawerHerbNotes" class="text-xs text-purple-100 leading-relaxed italic"></p>
-        </div>
-      </div>
-
-      <div class="p-6 space-y-6">
-        <!-- Warnings Box -->
-        <div id="drawerWarningsBox" class="bg-amber-50 border border-amber-200 p-5 rounded-2xl space-y-3 hidden">
-          <h4 class="font-extrabold text-amber-900 text-sm flex items-center gap-1.5 uppercase tracking-wider">
-            <i data-lucide="alert-triangle" class="w-4 h-4 text-amber-600"></i> Clinical Drug Warnings
-          </h4>
-          <div id="drawerWarningsList" class="divide-y divide-amber-200/50 space-y-2"></div>
-        </div>
-
-        <div class="space-y-1.5">
-          <span class="text-[10px] uppercase font-bold text-stone-400 block tracking-wider">Constituents</span>
-          <p id="drawerConstituents" class="text-stone-800 text-sm leading-relaxed font-semibold bg-stone-50 p-3 rounded-xl border border-stone-150"></p>
-        </div>
-
-        <div class="space-y-1.5">
-          <span class="text-[10px] uppercase font-bold text-stone-400 block tracking-wider">Medicinal Properties</span>
-          <p id="drawerProperties" class="text-stone-700 text-xs leading-relaxed"></p>
-        </div>
-
-        <div class="space-y-1.5">
-          <span class="text-[10px] uppercase font-bold text-stone-400 block tracking-wider">Contraindications / Safety Precautions</span>
-          <p id="drawerContraindications" class="text-red-700 text-xs font-semibold leading-relaxed bg-red-50/50 p-3.5 rounded-xl border border-red-150/40"></p>
-        </div>
-
-        <div class="grid grid-cols-2 gap-4 pt-4 border-t border-stone-100">
-          <div class="space-y-1">
-            <span class="text-[10px] uppercase font-bold text-stone-400 block tracking-wider">Best Prep Methods</span>
-            <p id="drawerPrep" class="text-stone-700 text-xs leading-relaxed"></p>
-          </div>
-          <div class="space-y-1">
-            <span class="text-[10px] uppercase font-bold text-stone-400 block tracking-wider">Best Menstruum</span>
-            <p id="drawerMenstruum" class="text-purple-950 text-xs font-semibold leading-relaxed"></p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="p-4 bg-stone-50 border-t border-stone-200 flex justify-between items-center">
-      <span class="text-[10px] text-stone-400 italic">Blossom's Botanical Apothecarium ✦ The Sanctum</span>
-      <button onclick="switchTab('shop'); closeMonographDrawer();" class="px-4 py-2 bg-purple-800 hover:bg-purple-950 text-white font-bold text-xs rounded-xl flex items-center gap-1.5 shadow-md">
-        <i data-lucide="shopping-bag" class="w-4 h-4"></i> Open Bulk Shop
+      <button onclick="enterApp()" class="btn-primary" style="width:100%;padding:16px;font-size:13px;letter-spacing:2px;border-radius:16px;margin-top:28px;">
+        Enter The Sanctum →
       </button>
     </div>
   </div>
-
-  <!-- BACKDROP BLUR FOR DRAWER -->
-  <div id="drawerBackdrop" onclick="closeMonographDrawer()" class="fixed inset-0 bg-stone-900/40 backdrop-blur-xs z-40 hidden"></div>
-
-  <!-- ==========================================
-       JS CORE ENGINE
-       ========================================== -->
-  <script>
-    // Database Variables
-    const HERBS_DATABASE = [
-      {
-        name: 'Ashwagandha Root',
-        chakra: 'Root',
-        category: 'Adaptogen',
-        wholesaleCostOz: 0.85,
-        notes: 'Core adrenal/stress herb — Adrenal Reset + menu',
-        constituents: 'Withanolides, alkaloids, saponins, iron, steroidal lactones',
-        properties: 'Adaptogen, nervine tonic, anti-inflammatory, thyroid supportive',
-        contraindications: 'Avoid in pregnancy (high dose). Caution with thyroid medications or sedatives.',
-        prep: 'Decoction (root), warm milk extract, tincture',
-        menstruum: '60% alcohol tincture; warm lipids (ghee); glycerite',
-        defaultPrices: { oz1: 5.55, oz2: 11.11, oz4: 18.18, oz8: 33.33 },
-        pattern: '111 / 333 / 818'
-      },
-      {
-        name: 'Dandelion Root',
-        chakra: 'Root',
-        category: 'Bitter/Liver',
-        wholesaleCostOz: 0.45,
-        notes: 'Grounding, liver support',
-        constituents: 'Inulin (prebiotic), taraxacin, bitter sesquiterpene lactones, potassium',
-        properties: 'Bitter tonic, hepatic, mild diuretic, prebiotic',
-        contraindications: 'Caution with diuretic medications and bile duct obstruction.',
-        prep: 'Roasted root decoction (coffee substitute), standard decoction',
-        menstruum: '40-50% alcohol tincture, hot water (decoction)',
-        defaultPrices: { oz1: 3.33, oz2: 7.77, oz4: 12.12, oz8: 22.22 },
-        pattern: '333 / 777 / 222'
-      },
-      {
-        name: 'Nettle Leaf',
-        chakra: 'Root',
-        category: 'Mineral-Rich',
-        wholesaleCostOz: 0.40,
-        notes: 'Nutritive powerhouse, kidney support, antihistamine',
-        constituents: 'Chlorophyll, flavonoids (quercetin), silica, calcium, iron, potassium',
-        properties: 'Nutritive tonic, alterative, mild diuretic, antihistamine',
-        contraindications: 'Generally very safe. Theoretical caution with heavy blood thinners.',
-        prep: 'Long-infusion (4-8 hours) for mineral extraction',
-        menstruum: 'Hot water infusion (best), apple cider vinegar',
-        defaultPrices: { oz1: 3.33, oz2: 7.77, oz4: 11.11, oz8: 22.22 },
-        pattern: '333 / 777 / 111'
-      },
-      {
-        name: 'Ginger Root (dried)',
-        chakra: 'Root',
-        category: 'Warming Spice',
-        wholesaleCostOz: 0.55,
-        notes: 'Systemic circulatory stimulant and digestive catalyst',
-        constituents: 'Gingerols, shogaols, volatile oils, resins',
-        properties: 'Carminative, diaphoretic, anti-emetic, circulatory stimulant',
-        contraindications: 'High doses caution with active peptic ulcers or antiplatelet drugs.',
-        prep: 'Decoction, warm infusion, ginger syrup',
-        menstruum: '60-70% alcohol; hot water decoction; honey',
-        defaultPrices: { oz1: 4.44, oz2: 8.88, oz4: 14.14, oz8: 22.22 },
-        pattern: '444 / 888 / 1414'
-      },
-      {
-        name: 'Maca Root Powder',
-        chakra: 'Root',
-        category: 'Adaptogen',
-        wholesaleCostOz: 0.65,
-        notes: 'Endocrine and stamina support, root connection',
-        constituents: 'Macamides, macaenes, glucosinolates, alkaloids, amino acids',
-        properties: 'Adaptogen, endocrine modulator, nutritive, aphrodisiac',
-        contraindications: 'Caution in hormone-sensitive conditions. Avoid high raw intake.',
-        prep: 'Whole food powder stirred into warm drinks or elixirs',
-        menstruum: 'Whole powder form only (not suitable for extraction)',
-        defaultPrices: { oz1: 4.44, oz2: 9.99, oz4: 15.15, oz8: 28.28 },
-        pattern: '444 / 999 / 1515'
-      },
-      {
-        name: 'Turmeric Root',
-        chakra: 'Solar Plexus',
-        category: 'Anti-inflammatory',
-        wholesaleCostOz: 0.60,
-        notes: 'Core systemic anti-inflammatory, liver and gallbladder stimulant',
-        constituents: 'Curcuminoids (curcumin), volatile oils (turmerone), resins',
-        properties: 'Anti-inflammatory, antioxidant, cholagogue, hepatoprotective',
-        contraindications: 'Avoid with bile duct obstruction or acute gallstones.',
-        prep: 'Decoction in fat/milk (ghee/coconut milk for curcumin absorption)',
-        menstruum: 'High-proof alcohol (70-95%); warm lipids',
-        defaultPrices: { oz1: 4.44, oz2: 8.88, oz4: 14.14, oz8: 24.24 },
-        pattern: '444 / 888 / 2424'
-      },
-      {
-        name: 'Damiana Leaf',
-        chakra: 'Sacral',
-        category: 'Nervine/Aphrodisiac',
-        wholesaleCostOz: 0.50,
-        notes: 'Emotional heart opening, reproductive pelvic circulation',
-        constituents: 'Volatile oils, cyanogenic glycosides, tannins, resins',
-        properties: 'Nervine tonic, aphrodisiac, mild antidepressant',
-        contraindications: 'Avoid during pregnancy. Caution with diabetic medications.',
-        prep: 'Infusion, cordial, herbal wine, tincture',
-        menstruum: '50-60% alcohol; sweet wines or brandy',
-        defaultPrices: { oz1: 5.55, oz2: 11.11, oz4: 18.18, oz8: 33.33 },
-        pattern: '555 / 1111 / 1818'
-      },
-      {
-        name: 'Hibiscus Flower',
-        chakra: 'Sacral',
-        category: 'Floral/Cooling',
-        wholesaleCostOz: 0.35,
-        notes: 'High vitamin C, cooling, sour-refreshing',
-        constituents: 'Anthocyanins, organic acids (citric, malic), vitamin C, mucilage',
-        properties: 'Refrigerant (cooling), hypotensive, diuretic, antioxidant',
-        contraindications: 'May lower blood pressure. High doses interfere with chloroquine.',
-        prep: 'Cold infusion, hot infusion, syrup base',
-        menstruum: 'Water, low-proof alcohol (25-30%)',
-        defaultPrices: { oz1: 3.33, oz2: 7.77, oz4: 11.11, oz8: 19.19 },
-        pattern: '333 / 777 / 1919'
-      },
-      {
-        name: 'Rose Petals/Buds',
-        chakra: 'Heart',
-        category: 'Floral/Nervine',
-        wholesaleCostOz: 0.70,
-        notes: 'Emotional heart opening, skin soothe, astringent',
-        constituents: 'Volatile oils, tannins, flavonoids, vitamin C',
-        properties: 'Mild sedative, nervine, astringent, cardiotonic',
-        contraindications: 'Extremely safe. High astringency may be slightly drying.',
-        prep: 'Gentle infusion, rose water hydrosol, infused honey',
-        menstruum: 'Water/glycerin mixture; 40% alcohol',
-        defaultPrices: { oz1: 5.55, oz2: 12.12, oz4: 19.19, oz8: 33.33 },
-        pattern: '555 / 1212 / 1919'
-      },
-      {
-        name: 'Lavender Flower',
-        chakra: 'Third Eye',
-        category: 'Relaxant',
-        wholesaleCostOz: 0.65,
-        notes: 'Deep relaxation, aromatic calm',
-        constituents: 'Linalool, linalyl acetate, tannins, coumarins',
-        properties: 'Carminative, nervine, sedative, spasmolytic',
-        contraindications: 'Caution with barbiturates or heavy sedative drugs.',
-        prep: 'Short infusion, steam inhalation, lavender honey',
-        menstruum: '50-60% alcohol; organic carrier oils',
-        defaultPrices: { oz1: 5.55, oz2: 11.11, oz4: 18.18, oz8: 33.33 },
-        pattern: '555 / 1111 / 1818'
-      },
-      {
-        name: 'St. John\'s Wort',
-        chakra: 'Heart',
-        category: 'Nervine/Vulnerable',
-        wholesaleCostOz: 0.48,
-        notes: 'Powerful liver enzyme inducer — major pharmaceutical interactions',
-        constituents: 'Hypericin, hyperforin, flavonoids, tannins',
-        properties: 'Nerve restorative, vulnerary, antiviral, antidepressant',
-        contraindications: 'Induces CYP3A4 clearance of birth control, SSRIs, statins, etc. Photo-sensitivity.',
-        prep: 'Standard infusion, fresh-bud oil extraction',
-        menstruum: '50-60% alcohol; cold pressed olive oil (ruby red)',
-        defaultPrices: { oz1: 4.44, oz2: 8.88, oz4: 14.14, oz8: 24.24 },
-        pattern: '444 / 888 / 2424'
-      }
-    ];
-
-    const PHARMACEUTICAL_INTERACTIONS = [
-      {
-        drugName: 'Warfarin (Coumadin)',
-        class: 'Anticoagulant',
-        treating: 'Blood clots, stroke prevention',
-        interactions: [
-          { herb: 'Garlic', severity: 'Major', effect: 'Increased bleeding risk (antiplatelet synergy)' },
-          { herb: 'Ginkgo Leaf', severity: 'Major', effect: 'Increased bleeding risk' },
-          { herb: 'St. John\'s Wort', severity: 'Major', effect: 'Decreases effectiveness of drug (increases clearance via CYP3A4)' },
-          { herb: 'Ginger Root (dried)', severity: 'Moderate', effect: 'High doses might increase bleeding risk' },
-          { herb: 'Turmeric Root', severity: 'Moderate', effect: 'Potential additive anti-platelet effects' }
-        ]
-      },
-      {
-        drugName: 'Atorvastatin (Lipitor)',
-        class: 'Statin',
-        treating: 'High Cholesterol',
-        interactions: [
-          { herb: 'St. John\'s Wort', severity: 'Major', effect: 'Decreases drug levels significantly via CYP3A4 induction' },
-          { herb: 'Red Yeast Rice', severity: 'Major', effect: 'Additive effect (contains natural lovastatins)' }
-        ]
-      },
-      {
-        drugName: 'Sertraline (Zoloft)',
-        class: 'SSRI Antidepressant',
-        treating: 'Depression, Anxiety',
-        interactions: [
-          { herb: 'St. John\'s Wort', severity: 'Major', effect: 'Severe risk of Serotonin Syndrome (additive serotonin reuptake inhibition)' },
-          { herb: 'Lavender Flower', severity: 'Minor', effect: 'Increased sedative properties' }
-        ]
-      },
-      {
-        drugName: 'Ibuprofen (Advil)',
-        class: 'NSAID',
-        treating: 'Pain, Inflammation',
-        interactions: [
-          { herb: 'Ginger Root (dried)', severity: 'Moderate', effect: 'Additive gastrointestinal irritation or bleeding risks' },
-          { herb: 'Ginkgo Leaf', severity: 'Moderate', effect: 'Increased bleeding risk' }
-        ]
-      }
-    ];
-
-    // State
-    let currentPricingMode = 'customer';
-    let selectedWeights = {};
-    let customPrices = {};
-
-    // Init weights
-    HERBS_DATABASE.forEach(h => {
-      selectedWeights[h.name] = 'oz4';
-      customPrices[h.name] = { ...h.defaultPrices };
+ 
+</div><!-- end entrance -->
+ 
+<!-- ═══════════════════════════════════════════
+     PWA INSTALL BANNER
+═══════════════════════════════════════════ -->
+<div class="pwa-banner" id="pwaBanner">
+  <div class="pwa-inner">
+    <div style="display:flex;align-items:center;gap:12px;">
+      <span style="font-size:24px;">🌿</span>
+      <div>
+        <p style="color:white;font-size:12px;font-weight:700;">Install The Sanctum</p>
+        <p style="color:rgba(216,180,254,0.6);font-size:10px;">Add to your home screen for instant access</p>
+      </div>
+    </div>
+    <div style="display:flex;gap:8px;">
+      <button onclick="dismissInstall()" style="color:rgba(168,85,247,0.5);font-size:11px;padding:6px 12px;border-radius:10px;border:1px solid rgba(168,85,247,0.2);background:transparent;cursor:pointer;">Later</button>
+      <button onclick="installPWA()" class="btn-primary btn-sm">Install</button>
+    </div>
+  </div>
+</div>
+ 
+<!-- QA RESET DOT -->
+<button class="qa-dot" onclick="qaReset()" title="QA Reset"></button>
+ 
+<!-- ═══════════════════════════════════════════
+     MAIN APP
+═══════════════════════════════════════════ -->
+<div class="app-wrapper">
+ 
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div>
+      <div class="sidebar-brand">
+        <div class="sidebar-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>
+        </div>
+        <div>
+          <div class="brand-title">The Sanctum</div>
+          <div class="brand-sub">Blossom's Botanical<br>Apothecarium</div>
+        </div>
+      </div>
+ 
+      <nav>
+        <button class="nav-btn active" id="btn-dashboard" onclick="switchTab('dashboard')">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+          Dashboard
+        </button>
+        <button class="nav-btn" id="btn-shop" onclick="switchTab('shop')">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+          Bulk Herb Shop
+        </button>
+        <button class="nav-btn" id="btn-monographs" onclick="switchTab('monographs')">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          Herb Monographs
+        </button>
+        <button class="nav-btn" id="btn-interaction" onclick="checkAccess(2,'interaction')">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          Drug Cross-Reference
+          <span class="tier-badge">Collective</span>
+        </button>
+      </nav>
+    </div>
+ 
+    <div class="member-badge" id="memberBadge">🌿 Public Access</div>
+  </aside>
+ 
+  <!-- MAIN CONTENT -->
+  <main class="main">
+ 
+    <!-- ════════════════════
+         DASHBOARD
+    ════════════════════ -->
+    <div class="tab active" id="tab-dashboard">
+ 
+      <!-- Hero -->
+      <div class="hero-gradient" style="border-radius:24px;padding:32px;color:white;margin-bottom:24px;">
+        <span style="font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#a78bfa;background:rgba(109,40,217,0.3);padding:4px 12px;border-radius:20px;">Blossom's Botanical Apothecarium</span>
+        <h2 class="serif" style="font-size:32px;font-weight:900;margin:12px 0 10px;">The Sanctum</h2>
+        <p style="color:rgba(216,180,254,0.8);font-size:14px;line-height:1.6;max-width:480px;">Your sacred botanical directory — chakra-aligned herbs, deep plant medicine wisdom, and a community rooted in intentional healing.</p>
+      </div>
+ 
+      <!-- Metrics -->
+      <div class="card-grid-4" style="margin-bottom:24px;">
+        <div class="metric-card">
+          <div class="metric-label">Botanical Directory</div>
+          <div class="metric-value" style="color:#1c1917;">11 Herbs</div>
+          <div class="metric-sub" style="color:#a8a29e;">Chakra-aligned botanicals</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">Chakra Paths</div>
+          <div class="metric-value" style="color:#7e22ce;">5 Paths</div>
+          <div class="metric-sub" style="color:#c026d3;">✦ Root to Third Eye</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">Moon Aligned</div>
+          <div class="metric-value">🌙</div>
+          <div class="metric-sub" style="color:#7e22ce;">New moon cohort starts</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">Community</div>
+          <div class="metric-value" style="color:#c026d3;font-size:20px;margin-top:10px;">The Collective</div>
+          <div class="metric-sub" style="color:#a21caf;">The Blossom Collective</div>
+        </div>
+      </div>
+ 
+      <!-- Teaser Cards -->
+      <div class="card-grid-2" style="margin-bottom:24px;">
+        <div class="teaser-card teaser-elixir">
+          <span class="teaser-tag">Coming Soon</span>
+          <div class="teaser-title">The Elixir Garden 🌿</div>
+          <div class="teaser-desc">A sacred apothecary bar blooming within The Sanctum — chakra-aligned wellness elixirs, botanical tonics, and ritual brews crafted with intention. The garden is being tended. Soon it opens its gates.</div>
+          <div class="teaser-form">
+            <input type="email" id="elixirEmail" placeholder="Your email address...">
+            <button onclick="submitTeaser('elixir')" class="btn-primary btn-sm" style="white-space:nowrap;">Notify Me</button>
+          </div>
+          <div class="teaser-success" id="elixirSuccess">✦ You've been added to the list — you'll be the first to know when the Garden Gates open.</div>
+          <div class="teaser-cta">🌿 We'll bring the elixir to you when the Garden Gates open.</div>
+        </div>
+        <div class="teaser-card teaser-challenge">
+          <span class="teaser-tag" style="color:#c084fc;">Next Cohort Forming</span>
+          <div class="teaser-title">7-Week Chakra Challenge 🌙</div>
+          <div class="teaser-desc">Seven weeks. Seven chakras. One transformational journey through plant medicine, intentional ritual, and energetic alignment — beginning always at the new moon. The next circle is being summoned.</div>
+          <div class="teaser-form">
+            <input type="email" id="challengeEmail" placeholder="Your email address...">
+            <button onclick="submitTeaser('challenge')" class="btn-primary btn-sm" style="white-space:nowrap;background:linear-gradient(135deg,#3730a3,#7e22ce);">Notify Me</button>
+          </div>
+          <div class="teaser-success" id="challengeSuccess" style="color:#c084fc;">✦ Welcome — you've been added to the list. When the Moon aligns, so will we.</div>
+          <div class="teaser-cta" style="color:rgba(168,85,247,0.4);">🌙 When the Moon aligns with the Chakra Challenge, we'll align with you.</div>
+        </div>
+      </div>
+ 
+      <!-- Explore by Chakra -->
+      <div style="margin-bottom:24px;">
+        <h3 class="serif" style="font-size:22px;font-weight:700;color:#1c1917;margin-bottom:6px;">Explore by Chakra</h3>
+        <p style="font-size:13px;color:#78716c;margin-bottom:16px;line-height:1.6;">Each herb in The Sanctum is aligned to a chakra — your body's energy centers. Click a chakra below to browse its herbs and discover the medicine it holds.</p>
+        <div class="card-grid-3">
+          <div class="chakra-card chakra-root" style="cursor:pointer;" onclick="filterAndGo('Root')">
+            <span style="font-size:10px;font-weight:700;background:#fee2e2;color:#991b1b;padding:3px 10px;border-radius:20px;text-transform:uppercase;letter-spacing:1px;">🔴 Root Chakra</span>
+            <h4 style="font-size:15px;font-weight:700;color:#1c1917;margin:10px 0 6px;">Grounding / Structural Support</h4>
+            <p style="font-size:11px;color:#57534e;line-height:1.6;">Building skeletal structure, relieving foundational nervous tension, and anchoring deep blood dynamics.</p>
+            <div style="margin-top:12px;font-size:11px;font-weight:700;color:#991b1b;cursor:pointer;">View Root herbs →</div>
+          </div>
+          <div class="chakra-card chakra-sacral" style="cursor:pointer;" onclick="filterAndGo('Sacral')">
+            <span style="font-size:10px;font-weight:700;background:#ffedd5;color:#9a3412;padding:3px 10px;border-radius:20px;text-transform:uppercase;letter-spacing:1px;">🟠 Sacral Chakra</span>
+            <h4 style="font-size:15px;font-weight:700;color:#1c1917;margin:10px 0 6px;">Flow / Endocrine Vitality</h4>
+            <p style="font-size:11px;color:#57534e;line-height:1.6;">Creative life force, pelvic circulation, healthy mucosal tissues, and hormone orchestration.</p>
+            <div style="margin-top:12px;font-size:11px;font-weight:700;color:#9a3412;cursor:pointer;">View Sacral herbs →</div>
+          </div>
+          <div class="chakra-card chakra-solar" style="cursor:pointer;" onclick="filterAndGo('Solar Plexus')">
+            <span style="font-size:10px;font-weight:700;background:#fef9c3;color:#854d0e;padding:3px 10px;border-radius:20px;text-transform:uppercase;letter-spacing:1px;">🟡 Solar Plexus</span>
+            <h4 style="font-size:15px;font-weight:700;color:#1c1917;margin:10px 0 6px;">Digestion / Metabolic Fire</h4>
+            <p style="font-size:11px;color:#57534e;line-height:1.6;">Gastric power, enzymic conversion, metabolic liver support, and boundary energy.</p>
+            <div style="margin-top:12px;font-size:11px;font-weight:700;color:#854d0e;cursor:pointer;">View Solar herbs →</div>
+          </div>
+        </div>
+      </div>
+ 
+      <!-- Coming Soon -->
+      <div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+          <h3 class="serif" style="font-size:22px;font-weight:700;color:#1c1917;">Coming to The Inner Sanctum</h3>
+          <span class="badge badge-fuchsia">Members Only</span>
+        </div>
+        <div class="card-grid-3">
+          <div class="coming-card">
+            <span class="coming-badge coming-badge-fuchsia">Coming Soon</span>
+            <div style="font-size:28px;margin-bottom:10px;">🫖</div>
+            <h4 style="font-size:14px;font-weight:700;color:#1c1917;margin-bottom:6px;padding-right:80px;">Wellness Elixirs</h4>
+            <p style="font-size:11px;color:#78716c;line-height:1.6;">The full chakra-aligned wellness menu — botanical tonics, elixirs, and ritual brews.</p>
+          </div>
+          <div class="coming-card">
+            <span class="coming-badge coming-badge-fuchsia">Coming Soon</span>
+            <div style="font-size:28px;margin-bottom:10px;">📜</div>
+            <h4 style="font-size:14px;font-weight:700;color:#1c1917;margin-bottom:6px;padding-right:80px;">Formulation Guides</h4>
+            <p style="font-size:11px;color:#78716c;line-height:1.6;">Downloadable batch recipes, ratios, and extraction method guides from the apothecary.</p>
+          </div>
+          <div class="coming-card">
+            <span class="coming-badge coming-badge-fuchsia">Coming Soon</span>
+            <div style="font-size:28px;margin-bottom:10px;">🌕</div>
+            <h4 style="font-size:14px;font-weight:700;color:#1c1917;margin-bottom:6px;padding-right:80px;">Live Challenge Cohorts</h4>
+            <p style="font-size:11px;color:#78716c;line-height:1.6;">Join a live 7-Week Chakra Alignment Challenge cohort with The Blossom Collective.</p>
+          </div>
+          <div class="coming-card">
+            <span class="coming-badge coming-badge-purple">Inner Sanctum</span>
+            <div style="font-size:28px;margin-bottom:10px;">💜</div>
+            <h4 style="font-size:14px;font-weight:700;color:#1c1917;margin-bottom:6px;padding-right:100px;">Blossom Collective Space</h4>
+            <p style="font-size:11px;color:#78716c;line-height:1.6;">A private community for members — share, learn, and grow together.</p>
+          </div>
+          <div class="coming-card">
+            <span class="coming-badge coming-badge-purple">Inner Sanctum</span>
+            <div style="font-size:28px;margin-bottom:10px;">⚗️</div>
+            <h4 style="font-size:14px;font-weight:700;color:#1c1917;margin-bottom:6px;padding-right:100px;">Practitioner Portal</h4>
+            <p style="font-size:11px;color:#78716c;line-height:1.6;">Wholesale access, bulk pricing, and practitioner-level formulation resources.</p>
+          </div>
+          <div class="coming-card">
+            <span class="coming-badge coming-badge-fuchsia">Coming Soon</span>
+            <div style="font-size:28px;margin-bottom:10px;">📓</div>
+            <h4 style="font-size:14px;font-weight:700;color:#1c1917;margin-bottom:6px;padding-right:80px;">Herbal Journal</h4>
+            <p style="font-size:11px;color:#78716c;line-height:1.6;">A chakra-aligned, moon-cycle interactive journaling tool for your botanical practice.</p>
+          </div>
+        </div>
+      </div>
+ 
+    </div><!-- end dashboard -->
+ 
+    <!-- ════════════════════
+         BULK HERB SHOP
+    ════════════════════ -->
+    <div class="tab" id="tab-shop">
+      <div class="card" style="margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;">
+        <div>
+          <h2 class="serif" style="font-size:24px;font-weight:700;color:#1c1917;">Bulk Herb Shop</h2>
+          <p style="font-size:13px;color:#78716c;margin-top:4px;">Browse our chakra-aligned botanical directory.</p>
+        </div>
+        <span class="member-badge" id="shopTierBadge" style="display:inline-block;background:#f3e8ff;color:#6d28d9;border:1px solid #e9d5ff;padding:6px 14px;border-radius:20px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;">🌿 Public Access</span>
+      </div>
+      <div class="card" style="margin-bottom:20px;display:flex;gap:16px;flex-wrap:wrap;">
+        <div class="search-wrap" style="flex:1;min-width:200px;">
+          <div class="search-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          </div>
+          <input class="input" id="shopSearch" style="padding-left:42px;" placeholder="Search herbs, categories..." oninput="renderShop()" onkeyup="renderShop()">
+        </div>
+        <select class="input" id="shopChakra" style="width:auto;min-width:160px;" onchange="renderShop()">
+          <option value="All">All Chakras</option>
+          <option value="Root">Root</option>
+          <option value="Sacral">Sacral</option>
+          <option value="Solar Plexus">Solar Plexus</option>
+          <option value="Heart">Heart</option>
+          <option value="Third Eye">Third Eye</option>
+        </select>
+      </div>
+      <div class="card-grid-2" id="shopGrid"></div>
+    </div>
+ 
+    <!-- ════════════════════
+         HERB MONOGRAPHS
+    ════════════════════ -->
+    <div class="tab" id="tab-monographs">
+      <div class="card" style="margin-bottom:20px;">
+        <h2 class="serif" style="font-size:24px;font-weight:700;color:#1c1917;margin-bottom:16px;">Herb Monographs</h2>
+        <div class="search-wrap">
+          <div class="search-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          </div>
+          <input class="input" id="monoSearch" style="padding-left:42px;" placeholder="Search herbs, actions, constituents..." oninput="renderMonographs()" onkeyup="renderMonographs()">
+        </div>
+      </div>
+      <div class="card-grid-2" id="monoGrid"></div>
+    </div>
+ 
+    <!-- ════════════════════
+         DRUG CROSS-REFERENCE
+    ════════════════════ -->
+    <div class="tab" id="tab-interaction">
+ 
+      <!-- Gate overlay (shown when tier < 2) -->
+      <div id="interactionGate" style="display:none;">
+        <div class="gate-overlay">
+          <div style="font-size:48px;margin-bottom:16px;">🔮</div>
+          <p class="text-fuchsia" style="font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;margin-bottom:8px;">Blossom Collective Access Required</p>
+          <div class="gate-title">The Medicine Cabinet</div>
+          <div class="gate-desc">The drug-herb interaction engine is reserved for members of The Blossom Collective. Join us — it's free, sacred, and your invitation is waiting.</div>
+          <div class="gate-input-wrap">
+            <input class="input-dark" type="text" id="collectiveCode" placeholder="Enter your access code..." style="text-align:center;letter-spacing:3px;text-transform:uppercase;margin-bottom:10px;">
+            <div id="codeError" style="display:none;color:#fca5a5;font-size:11px;text-align:center;margin-bottom:10px;"></div>
+            <button onclick="submitCode()" class="btn-primary" style="width:100%;padding:12px;letter-spacing:2px;">✦ Unlock Access</button>
+            <button onclick="showStep('stepGate')" style="background:none;border:none;color:rgba(168,85,247,0.5);font-size:11px;cursor:pointer;margin-top:12px;width:100%;text-decoration:underline;">Don't have a code? Join The Blossom Collective</button>
+          </div>
+        </div>
+      </div>
+ 
+      <!-- Actual content (shown when tier >= 2) -->
+      <div id="interactionContent" style="display:none;">
+        <div class="card" style="margin-bottom:20px;">
+          <h2 class="serif" style="font-size:24px;font-weight:700;color:#1c1917;margin-bottom:6px;">Drug-Herb Interaction Checker</h2>
+          <p style="font-size:13px;color:#78716c;margin-bottom:16px;">Cross-reference common pharmaceuticals against our botanical monographs.</p>
+          <div class="search-wrap">
+            <div class="search-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            </div>
+            <input class="input" id="drugSearch" style="padding-left:42px;" placeholder="Type drug name (e.g. Warfarin, Lipitor, Zoloft)..." oninput="renderInteractions()" onkeyup="renderInteractions()">
+          </div>
+        </div>
+        <div id="interactionList"></div>
+      </div>
+ 
+    </div>
+ 
+  </main>
+</div>
+ 
+<!-- ═══════════════════════════════════════════
+     MONOGRAPH DRAWER
+═══════════════════════════════════════════ -->
+<div class="drawer" id="monoDrawer">
+  <div class="drawer-header">
+    <button class="drawer-close" onclick="closeDrawer()">✕</button>
+    <div style="margin-top:8px;">
+      <span id="dChakraBadge" style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#e879f9;background:rgba(192,38,211,0.2);padding:3px 10px;border-radius:8px;"></span>
+      <h3 class="serif" id="dHerbName" style="font-size:26px;font-weight:700;color:white;margin:8px 0 4px;"></h3>
+      <p id="dNotes" style="font-size:11px;color:rgba(216,180,254,0.7);font-style:italic;line-height:1.5;"></p>
+    </div>
+  </div>
+  <div class="drawer-body">
+    <div id="dWarnings" style="display:none;" class="drawer-warning">
+      <h4 style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:#92400e;margin-bottom:10px;display:flex;align-items:center;gap:6px;">⚠️ Clinical Drug Warnings</h4>
+      <div id="dWarningsList"></div>
+    </div>
+    <div class="drawer-section">
+      <span class="drawer-label">Constituents</span>
+      <div id="dConstituents" class="drawer-constituents"></div>
+    </div>
+    <div class="drawer-section">
+      <span class="drawer-label">Medicinal Properties</span>
+      <p id="dProperties" class="drawer-text"></p>
+    </div>
+    <div class="drawer-section">
+      <span class="drawer-label">Contraindications & Safety</span>
+      <div id="dContra" class="drawer-contra"></div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;padding-top:16px;border-top:1px solid #e7e5e4;">
+      <div>
+        <span class="drawer-label">Best Prep Methods</span>
+        <p id="dPrep" class="drawer-text"></p>
+      </div>
+      <div>
+        <span class="drawer-label">Best Menstruum</span>
+        <p id="dMenstruum" style="font-size:12px;font-weight:600;color:#2e1065;line-height:1.6;"></p>
+      </div>
+    </div>
+  </div>
+  <div class="drawer-footer">
+    <p style="font-size:10px;color:#a8a29e;font-style:italic;flex:1;">Blossom's Botanical Apothecarium ✦ The Sanctum</p>
+    <button onclick="closeDrawer();switchTab('shop');" class="btn-primary btn-sm">View in Shop</button>
+  </div>
+</div>
+<div class="backdrop" id="backdrop" onclick="closeDrawer()"></div>
+ 
+<!-- ═══════════════════════════════════════════
+     JAVASCRIPT
+═══════════════════════════════════════════ -->
+<script>
+ 
+// ── DATA ──────────────────────────────────────────────────────────────────
+const HERBS = [
+  { name:'Ashwagandha Root', chakra:'Root', cat:'Adaptogen', cost:0.85, prices:{oz1:5.55,oz2:11.11,oz4:18.18,oz8:33.33},
+    notes:'Core adrenal/stress herb — Adrenal Reset + menu',
+    constituents:'Withanolides, alkaloids, saponins, iron, steroidal lactones',
+    properties:'Adaptogen, nervine tonic, anti-inflammatory, thyroid supportive',
+    contra:'Avoid in pregnancy (high dose). Caution with thyroid medications or sedatives.',
+    prep:'Decoction (root), warm milk extract, tincture',
+    menstruum:'60% alcohol tincture; warm lipids (ghee); glycerite' },
+  { name:'Dandelion Root', chakra:'Root', cat:'Bitter/Liver', cost:0.45, prices:{oz1:3.33,oz2:7.77,oz4:12.12,oz8:22.22},
+    notes:'Grounding, liver support',
+    constituents:'Inulin (prebiotic), taraxacin, bitter sesquiterpene lactones, potassium',
+    properties:'Bitter tonic, hepatic, mild diuretic, prebiotic',
+    contra:'Caution with diuretic medications and bile duct obstruction.',
+    prep:'Roasted root decoction (coffee substitute), standard decoction',
+    menstruum:'40-50% alcohol tincture, hot water (decoction)' },
+  { name:'Nettle Leaf', chakra:'Root', cat:'Mineral-Rich', cost:0.40, prices:{oz1:3.33,oz2:7.77,oz4:11.11,oz8:22.22},
+    notes:'Nutritive powerhouse, kidney support, antihistamine',
+    constituents:'Chlorophyll, flavonoids (quercetin), silica, calcium, iron, potassium',
+    properties:'Nutritive tonic, alterative, mild diuretic, antihistamine',
+    contra:'Generally very safe. Theoretical caution with heavy blood thinners.',
+    prep:'Long-infusion (4-8 hours) for mineral extraction',
+    menstruum:'Hot water infusion (best), apple cider vinegar' },
+  { name:'Ginger Root (dried)', chakra:'Root', cat:'Warming Spice', cost:0.55, prices:{oz1:4.44,oz2:8.88,oz4:14.14,oz8:22.22},
+    notes:'Systemic circulatory stimulant and digestive catalyst',
+    constituents:'Gingerols, shogaols, volatile oils, resins',
+    properties:'Carminative, diaphoretic, anti-emetic, circulatory stimulant',
+    contra:'High doses caution with active peptic ulcers or antiplatelet drugs.',
+    prep:'Decoction, warm infusion, ginger syrup',
+    menstruum:'60-70% alcohol; hot water decoction; honey' },
+  { name:'Maca Root Powder', chakra:'Root', cat:'Adaptogen', cost:0.65, prices:{oz1:4.44,oz2:9.99,oz4:15.15,oz8:28.28},
+    notes:'Endocrine and stamina support, root connection',
+    constituents:'Macamides, macaenes, glucosinolates, alkaloids, amino acids',
+    properties:'Adaptogen, endocrine modulator, nutritive, aphrodisiac',
+    contra:'Caution in hormone-sensitive conditions. Avoid high raw intake.',
+    prep:'Whole food powder stirred into warm drinks or elixirs',
+    menstruum:'Whole powder form only (not suitable for extraction)' },
+  { name:'Turmeric Root', chakra:'Solar Plexus', cat:'Anti-inflammatory', cost:0.60, prices:{oz1:4.44,oz2:8.88,oz4:14.14,oz8:24.24},
+    notes:'Core systemic anti-inflammatory, liver and gallbladder stimulant',
+    constituents:'Curcuminoids (curcumin), volatile oils (turmerone), resins',
+    properties:'Anti-inflammatory, antioxidant, cholagogue, hepatoprotective',
+    contra:'Avoid with bile duct obstruction or acute gallstones.',
+    prep:'Decoction in fat/milk (ghee/coconut milk for curcumin absorption)',
+    menstruum:'High-proof alcohol (70-95%); warm lipids' },
+  { name:'Damiana Leaf', chakra:'Sacral', cat:'Nervine/Aphrodisiac', cost:0.50, prices:{oz1:5.55,oz2:11.11,oz4:18.18,oz8:33.33},
+    notes:'Emotional heart opening, reproductive pelvic circulation',
+    constituents:'Volatile oils, cyanogenic glycosides, tannins, resins',
+    properties:'Nervine tonic, aphrodisiac, mild antidepressant',
+    contra:'Avoid during pregnancy. Caution with diabetic medications.',
+    prep:'Infusion, cordial, herbal wine, tincture',
+    menstruum:'50-60% alcohol; sweet wines or brandy' },
+  { name:'Hibiscus Flower', chakra:'Sacral', cat:'Floral/Cooling', cost:0.35, prices:{oz1:3.33,oz2:7.77,oz4:11.11,oz8:19.19},
+    notes:'High vitamin C, cooling, sour-refreshing',
+    constituents:'Anthocyanins, organic acids (citric, malic), vitamin C, mucilage',
+    properties:'Refrigerant (cooling), hypotensive, diuretic, antioxidant',
+    contra:'May lower blood pressure. High doses interfere with chloroquine.',
+    prep:'Cold infusion, hot infusion, syrup base',
+    menstruum:'Water, low-proof alcohol (25-30%)' },
+  { name:'Rose Petals/Buds', chakra:'Heart', cat:'Floral/Nervine', cost:0.70, prices:{oz1:5.55,oz2:12.12,oz4:19.19,oz8:33.33},
+    notes:'Emotional heart opening, skin soothe, astringent',
+    constituents:'Volatile oils, tannins, flavonoids, vitamin C',
+    properties:'Mild sedative, nervine, astringent, cardiotonic',
+    contra:'Extremely safe. High astringency may be slightly drying.',
+    prep:'Gentle infusion, rose water hydrosol, infused honey',
+    menstruum:'Water/glycerin mixture; 40% alcohol' },
+  { name:'Lavender Flower', chakra:'Third Eye', cat:'Relaxant', cost:0.65, prices:{oz1:5.55,oz2:11.11,oz4:18.18,oz8:33.33},
+    notes:'Deep relaxation, aromatic calm',
+    constituents:'Linalool, linalyl acetate, tannins, coumarins',
+    properties:'Carminative, nervine, sedative, spasmolytic',
+    contra:'Caution with barbiturates or heavy sedative drugs.',
+    prep:'Short infusion, steam inhalation, lavender honey',
+    menstruum:'50-60% alcohol; organic carrier oils' },
+  { name:"St. John's Wort", chakra:'Heart', cat:'Nervine/Vulnerary', cost:0.48, prices:{oz1:4.44,oz2:8.88,oz4:14.14,oz8:24.24},
+    notes:'Powerful liver enzyme inducer — major pharmaceutical interactions',
+    constituents:'Hypericin, hyperforin, flavonoids, tannins',
+    properties:'Nerve restorative, vulnerary, antiviral, antidepressant',
+    contra:'Induces CYP3A4 clearance of birth control, SSRIs, statins. Photo-sensitivity.',
+    prep:'Standard infusion, fresh-bud oil extraction',
+    menstruum:'50-60% alcohol; cold pressed olive oil (ruby red)' }
+];
+ 
+const DRUGS = [
+  { name:'Warfarin (Coumadin)', cls:'Anticoagulant', treating:'Blood clots, stroke prevention',
+    interactions:[
+      { herb:'Garlic', sev:'Major', effect:'Increased bleeding risk (antiplatelet synergy)' },
+      { herb:'Ginkgo Leaf', sev:'Major', effect:'Increased bleeding risk' },
+      { herb:"St. John's Wort", sev:'Major', effect:'Decreases effectiveness via CYP3A4 induction' },
+      { herb:'Ginger Root (dried)', sev:'Moderate', effect:'High doses may increase bleeding risk' },
+      { herb:'Turmeric Root', sev:'Moderate', effect:'Potential additive anti-platelet effects' }
+    ]},
+  { name:'Atorvastatin (Lipitor)', cls:'Statin', treating:'High Cholesterol',
+    interactions:[
+      { herb:"St. John's Wort", sev:'Major', effect:'Significantly decreases drug levels via CYP3A4 induction' },
+      { herb:'Red Yeast Rice', sev:'Major', effect:'Additive effect (contains natural lovastatins)' }
+    ]},
+  { name:'Sertraline (Zoloft)', cls:'SSRI Antidepressant', treating:'Depression, Anxiety',
+    interactions:[
+      { herb:"St. John's Wort", sev:'Major', effect:'Severe risk of Serotonin Syndrome' },
+      { herb:'Lavender Flower', sev:'Minor', effect:'Increased sedative properties' }
+    ]},
+  { name:'Ibuprofen (Advil)', cls:'NSAID', treating:'Pain, Inflammation',
+    interactions:[
+      { herb:'Ginger Root (dried)', sev:'Moderate', effect:'Additive gastrointestinal irritation or bleeding risks' },
+      { herb:'Ginkgo Leaf', sev:'Moderate', effect:'Increased bleeding risk' }
+    ]}
+];
+ 
+// ── CODES ──────────────────────────────────────────────────────────────────
+// Change these in admin.html → Access Code Manager
+const COLLECTIVE_CODE = 'BLOOM2026';
+const INNER_CODE = 'SANCTUM777';
+ 
+// ── STATE ─────────────────────────────────────────────────────────────────
+function getMember() {
+  try { return JSON.parse(localStorage.getItem('sanctum_state') || 'null'); } catch(e) { return null; }
+}
+function setMember(data) {
+  localStorage.setItem('sanctum_state', JSON.stringify(data));
+}
+function getTier() {
+  var m = getMember();
+  return m ? (m.tier || 0) : 0;
+}
+ 
+// ── ENTRANCE FLOW ──────────────────────────────────────────────────────────
+function showStep(id) {
+  var steps = document.querySelectorAll('.entrance-step');
+  steps.forEach(function(s) { s.classList.remove('active'); });
+  var target = document.getElementById(id);
+  if (target) target.classList.add('active');
+}
+ 
+function submitGate() {
+  var email = document.getElementById('gateEmail').value.trim();
+  var name = document.getElementById('gateName').value.trim();
+  var sanctumName = document.getElementById('gateSanctumName').value.trim();
+  var check = document.getElementById('disclaimerCheck');
+  var err = document.getElementById('gateError');
+ 
+  if (!email || email.indexOf('@') < 0) {
+    err.textContent = 'Please enter a valid email address.';
+    err.style.display = 'block'; return;
+  }
+  if (!name) {
+    err.textContent = 'Please enter your first name.';
+    err.style.display = 'block'; return;
+  }
+  if (!check.checked) {
+    err.textContent = 'Please acknowledge the educational disclaimer to continue.';
+    err.style.display = 'block'; return;
+  }
+  err.style.display = 'none';
+ 
+  setMember({ tier: 2, email: email, firstName: name, sanctumName: sanctumName || name, joinedAt: new Date().toISOString() });
+ 
+  // Mailchimp — REPLACE with your URL from Mailchimp → Audience → Signup forms → Embedded forms
+  // Change /post? to /post-json? and add &c=mcCB at the end
+  var MC_URL = 'REPLACE_WITH_MAILCHIMP_URL';
+  if (MC_URL !== 'REPLACE_WITH_MAILCHIMP_URL') {
+    window.mcCB = function(r) { console.log('MC:', r.result); };
+    var s = document.createElement('script');
+    s.src = MC_URL + '&EMAIL=' + encodeURIComponent(email) + '&FNAME=' + encodeURIComponent(name) + '&MMERGE2=' + encodeURIComponent(sanctumName) + '&c=mcCB';
+    document.body.appendChild(s);
+  }
+ 
+  document.getElementById('welcomeNameDisplay').textContent = sanctumName || name;
+  showStep('stepWelcome');
+}
+ 
+function enterApp() {
+  var entrance = document.getElementById('entrance');
+  if (entrance) entrance.style.display = 'none';
+  updateTierUI();
+  renderShop();
+  renderMonographs();
+  showInteractionTab();
+}
+ 
+function showWelcomeBack(name) {
+  document.getElementById('welcomeNameDisplay').textContent = name || 'Welcome back';
+  showStep('stepWelcome');
+  setTimeout(function() { enterApp(); }, 2200);
+}
+ 
+// ── TIER UI ────────────────────────────────────────────────────────────────
+function updateTierUI() {
+  var tier = getTier();
+  var badge = document.getElementById('memberBadge');
+  var shopBadge = document.getElementById('shopTierBadge');
+  var labels = { 0: '🌿 Public Access', 2: '🌿 Blossom Collective', 3: '✦ Inner Sanctum' };
+  var label = labels[tier] || labels[0];
+  if (badge) badge.textContent = label;
+  if (shopBadge) shopBadge.textContent = label;
+}
+ 
+function checkAccess(required, tabId) {
+  var tier = getTier();
+  switchTab(tabId);
+  if (tier >= required) {
+    document.getElementById('interactionGate').style.display = 'none';
+    document.getElementById('interactionContent').style.display = 'block';
+    renderInteractions();
+  } else {
+    document.getElementById('interactionGate').style.display = 'block';
+    document.getElementById('interactionContent').style.display = 'none';
+  }
+}
+ 
+function submitCode() {
+  var code = document.getElementById('collectiveCode').value.trim().toUpperCase();
+  var err = document.getElementById('codeError');
+  var m = getMember() || { tier: 0 };
+ 
+  if (code === INNER_CODE) {
+    m.tier = 3; setMember(m); updateTierUI();
+    document.getElementById('interactionGate').style.display = 'none';
+    document.getElementById('interactionContent').style.display = 'block';
+    renderInteractions();
+    showToast('✦ Inner Sanctum unlocked. Welcome home.');
+  } else if (code === COLLECTIVE_CODE) {
+    m.tier = 2; setMember(m); updateTierUI();
+    document.getElementById('interactionGate').style.display = 'none';
+    document.getElementById('interactionContent').style.display = 'block';
+    renderInteractions();
+    showToast('🌿 Welcome to The Blossom Collective!');
+  } else {
+    err.textContent = "That code doesn't match. Check your welcome email and try again.";
+    err.style.display = 'block';
+  }
+}
+ 
+function showInteractionTab() {
+  var tier = getTier();
+  if (tier >= 2) {
+    document.getElementById('interactionGate').style.display = 'none';
+    document.getElementById('interactionContent').style.display = 'block';
+    renderInteractions();
+  } else {
+    document.getElementById('interactionGate').style.display = 'block';
+    document.getElementById('interactionContent').style.display = 'none';
+  }
+}
+ 
+// ── TAB SWITCHING ─────────────────────────────────────────────────────────
+function switchTab(id) {
+  document.querySelectorAll('.tab').forEach(function(t) { t.classList.remove('active'); });
+  document.querySelectorAll('.nav-btn').forEach(function(b) { b.classList.remove('active'); });
+  var tab = document.getElementById('tab-' + id);
+  var btn = document.getElementById('btn-' + id);
+  if (tab) tab.classList.add('active');
+  if (btn) btn.classList.add('active');
+}
+ 
+function filterAndGo(chakra) {
+  switchTab('shop');
+  document.getElementById('shopChakra').value = chakra;
+  renderShop();
+}
+ 
+// ── RENDER SHOP ────────────────────────────────────────────────────────────
+function renderShop() {
+  var search = document.getElementById('shopSearch').value.toLowerCase();
+  var chakra = document.getElementById('shopChakra').value;
+  var grid = document.getElementById('shopGrid');
+  if (!grid) return;
+  grid.innerHTML = '';
+ 
+  var filtered = HERBS.filter(function(h) {
+    return (chakra === 'All' || h.chakra === chakra) &&
+           (h.name.toLowerCase().includes(search) || h.cat.toLowerCase().includes(search));
+  });
+ 
+  filtered.forEach(function(herb) {
+    var chakraBadgeClass = {
+      'Root': 'badge-root', 'Sacral': 'badge-sacral', 'Solar Plexus': 'badge-solar',
+      'Heart': 'badge-heart', 'Third Eye': 'badge-thirdeye', 'Crown': 'badge-crown'
+    }[herb.chakra] || 'badge-purple';
+ 
+    var interactions = getHerbInteractions(herb.name);
+    var warnHTML = interactions.length > 0
+      ? '<div style="padding:10px 20px;background:#fffbeb;border-top:1px solid #fde68a;font-size:10px;color:#92400e;display:flex;align-items:center;gap:6px;">⚠️ Cross-reference required for ' + interactions.length + ' pharmaceutical(s)</div>'
+      : '';
+ 
+    var card = document.createElement('div');
+    card.className = 'herb-card';
+    card.innerHTML = 
+      '<div class="herb-card-body">' +
+        '<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;">' +
+          '<div>' +
+            '<div class="herb-cat">' + herb.cat + '</div>' +
+            '<div class="herb-name">' + herb.name + '</div>' +
+          '</div>' +
+          '<span class="badge ' + chakraBadgeClass + '">' + herb.chakra + '</span>' +
+        '</div>' +
+        '<div class="herb-notes">"' + herb.notes + '"</div>' +
+        '<div class="herb-actions"><strong style="font-size:9px;text-transform:uppercase;letter-spacing:1px;color:#a8a29e;display:block;margin-bottom:4px;">Actions</strong>' + herb.properties + '</div>' +
+      '</div>' +
+      warnHTML +
+      '<div class="herb-card-footer">' +
+        '<div>' +
+          '<span style="font-size:9px;text-transform:uppercase;letter-spacing:1px;color:#a8a29e;display:block;margin-bottom:4px;">Retail Price (4oz)</span>' +
+          '<span style="font-size:22px;font-weight:800;color:#1c1917;font-family:monospace;">$' + herb.prices.oz4.toFixed(2) + '</span>' +
+        '</div>' +
+        '<button onclick="openDrawer(\'' + herb.name.replace(/'/g,"\\'") + '\')" class="btn-primary btn-sm">View Plant Profile →</button>' +
+      '</div>';
+    grid.appendChild(card);
+  });
+ 
+  if (filtered.length === 0) {
+    grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:48px;color:#a8a29e;font-style:italic;">No herbs found matching your search.</div>';
+  }
+}
+ 
+// ── RENDER MONOGRAPHS ─────────────────────────────────────────────────────
+function renderMonographs() {
+  var search = document.getElementById('monoSearch').value.toLowerCase();
+  var grid = document.getElementById('monoGrid');
+  if (!grid) return;
+  grid.innerHTML = '';
+ 
+  var filtered = HERBS.filter(function(h) {
+    return h.name.toLowerCase().includes(search) ||
+           h.properties.toLowerCase().includes(search) ||
+           h.cat.toLowerCase().includes(search);
+  });
+ 
+  filtered.forEach(function(herb) {
+    var card = document.createElement('div');
+    card.className = 'herb-card';
+    card.style.cursor = 'pointer';
+    card.onclick = function() { openDrawer(herb.name); };
+    card.innerHTML =
+      '<div class="herb-card-body">' +
+        '<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;">' +
+          '<div>' +
+            '<div class="herb-name">' + herb.name + '</div>' +
+            '<div class="herb-cat">' + herb.cat + '</div>' +
+          '</div>' +
+          '<span class="badge badge-purple">' + herb.chakra + '</span>' +
+        '</div>' +
+        '<div class="herb-notes" style="margin-bottom:8px;">"' + herb.notes + '"</div>' +
+        '<div class="herb-actions"><strong style="font-size:9px;text-transform:uppercase;letter-spacing:1px;color:#a8a29e;display:block;margin-bottom:4px;">Actions</strong>' + herb.properties + '</div>' +
+      '</div>' +
+      '<div class="herb-card-footer">' +
+        '<span style="font-size:12px;font-weight:700;color:#6d28d9;">View Plant Profile →</span>' +
+      '</div>';
+    grid.appendChild(card);
+  });
+}
+ 
+// ── DRAWER ────────────────────────────────────────────────────────────────
+function openDrawer(herbName) {
+  var herb = HERBS.find(function(h) { return h.name.toLowerCase() === herbName.toLowerCase(); });
+  if (!herb) return;
+ 
+  document.getElementById('dChakraBadge').textContent = herb.chakra + ' Chakra · ' + herb.cat;
+  document.getElementById('dHerbName').textContent = herb.name;
+  document.getElementById('dNotes').textContent = '"' + herb.notes + '"';
+  document.getElementById('dConstituents').textContent = herb.constituents;
+  document.getElementById('dProperties').textContent = herb.properties;
+  document.getElementById('dContra').textContent = herb.contra;
+  document.getElementById('dPrep').textContent = herb.prep;
+  document.getElementById('dMenstruum').textContent = herb.menstruum;
+ 
+  var warnings = getHerbInteractions(herb.name);
+  var wBox = document.getElementById('dWarnings');
+  var wList = document.getElementById('dWarningsList');
+  wList.innerHTML = '';
+  if (warnings.length > 0) {
+    wBox.style.display = 'block';
+    warnings.forEach(function(w) {
+      var row = document.createElement('div');
+      row.style.cssText = 'display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-top:1px solid #fde68a;font-size:11px;';
+      row.innerHTML = '<div><strong style="color:#92400e;">' + w.drug + '</strong><p style="color:#78716c;margin-top:2px;">' + w.effect + '</p></div>' +
+                      '<span style="font-size:9px;font-weight:700;text-transform:uppercase;color:#991b1b;white-space:nowrap;">' + w.sev + '</span>';
+      wList.appendChild(row);
     });
-
-
-
-    // ── TEASER EMAIL SUBMISSIONS ───────────────────────────────────────────
-    function submitTeaserEmail(type) {
-      const emailEl = document.getElementById(type === 'elixir' ? 'elixirEmail' : 'challengeEmail');
-      const successEl = document.getElementById(type === 'elixir' ? 'elixirSuccess' : 'challengeSuccess');
-      const email = emailEl.value.trim();
-
-      if (!email || !email.includes('@')) {
-        emailEl.style.borderColor = 'rgba(239,68,68,0.6)';
-        setTimeout(() => emailEl.style.borderColor = '', 2000);
-        return;
+  } else {
+    wBox.style.display = 'none';
+  }
+ 
+  document.getElementById('monoDrawer').classList.add('open');
+  document.getElementById('backdrop').style.display = 'block';
+}
+ 
+function closeDrawer() {
+  document.getElementById('monoDrawer').classList.remove('open');
+  document.getElementById('backdrop').style.display = 'none';
+}
+ 
+// ── DRUG INTERACTIONS ─────────────────────────────────────────────────────
+function getHerbInteractions(herbName) {
+  var results = [];
+  DRUGS.forEach(function(drug) {
+    drug.interactions.forEach(function(i) {
+      if (i.herb.toLowerCase() === herbName.toLowerCase()) {
+        results.push({ drug: drug.name, sev: i.sev, effect: i.effect });
       }
-
-      // Save locally
-      const key = type === 'elixir' ? 'sanctum_elixir_waitlist' : 'sanctum_challenge_waitlist';
-      const list = JSON.parse(localStorage.getItem(key) || '[]');
-      list.push({ email, joinedAt: new Date().toISOString() });
-      localStorage.setItem(key, JSON.stringify(list));
-
-      // ── MAILCHIMP SUBMISSION ─────────────────────────────────────────────
-      // REPLACE with your Mailchimp URL — tag differently per list
-      // Elixir Garden: use tag 'elixir-garden-waitlist'
-      // Chakra Challenge: use tag 'chakra-challenge-waitlist'
-      const MAILCHIMP_ELIXIR_URL = 'REPLACE_WITH_MAILCHIMP_URL';
-      const MAILCHIMP_CHALLENGE_URL = 'REPLACE_WITH_MAILCHIMP_URL';
-      const url = type === 'elixir' ? MAILCHIMP_ELIXIR_URL : MAILCHIMP_CHALLENGE_URL;
-
-      if (url !== 'REPLACE_WITH_MAILCHIMP_URL') {
-        window.mailchimpTeaserCB = function(resp) { console.log('Mailchimp:', resp.result); };
-        const script = document.createElement('script');
-        script.src = `${url}&EMAIL=${encodeURIComponent(email)}&c=mailchimpTeaserCB`;
-        document.body.appendChild(script);
-      }
-
-      emailEl.value = '';
-      successEl.classList.remove('hidden');
-    }
-
-    // ── PWA INSTALL PROMPT ─────────────────────────────────────────────────
-    let deferredPrompt = null;
-
-    window.addEventListener('beforeinstallprompt', (e) => {
-      e.preventDefault();
-      deferredPrompt = e;
-      // Show install banner after 8 seconds
-      setTimeout(() => {
-        if (!localStorage.getItem('sanctum_install_dismissed')) {
-          document.getElementById('installBanner').classList.remove('hidden');
-          document.getElementById('installBanner').style.display = 'block';
-        }
-      }, 5000);
     });
-
-    function installApp() {
-      if (deferredPrompt) {
-        deferredPrompt.prompt();
-        deferredPrompt.userChoice.then((choice) => {
-          if (choice.outcome === 'accepted') {
-            localStorage.setItem('sanctum_install_dismissed', 'true');
-          }
-          deferredPrompt = null;
-          document.getElementById('installBanner').style.display = 'none';
-        });
-      } else {
-        // iOS fallback
-        alert('To install: tap the Share button then "Add to Home Screen" 🌿');
-        document.getElementById('installBanner').style.display = 'none';
-      }
-    }
-
-    function dismissInstall() {
-      localStorage.setItem('sanctum_install_dismissed', 'true');
-      document.getElementById('installBanner').style.display = 'none';
-    }
-
-    // ── PWA SERVICE WORKER ─────────────────────────────────────────────────
-    if ('serviceWorker' in navigator) {
-      const swCode = `
-        self.addEventListener('install', e => self.skipWaiting());
-        self.addEventListener('activate', e => clients.claim());
-        self.addEventListener('fetch', e => {
-          e.respondWith(fetch(e.request).catch(() => caches.match(e.request)));
-        });
-      `;
-      const swBlob = new Blob([swCode], {type: 'application/javascript'});
-      const swURL = URL.createObjectURL(swBlob);
-      navigator.serviceWorker.register(swURL).catch(err => console.log('SW:', err));
-    }
-
-
-
-
-
-
-
-
-
-
-    // ── ENTRANCE FLOW FUNCTIONS ────────────────────────────────────────────
-    function showStep(stepId) {
-      var steps = ['stepSplash', 'stepGate', 'stepWelcome'];
-      for (var i = 0; i < steps.length; i++) {
-        var el = document.getElementById(steps[i]);
-        if (el) el.style.display = 'none';
-      }
-      var target = document.getElementById(stepId);
-      if (target) {
-        target.style.display = 'flex';
-        target.style.flexDirection = 'column';
-      }
-    }
-
-    function submitGate() {
-      var email = document.getElementById('gateEmail').value.trim();
-      var firstName = document.getElementById('gateName').value.trim();
-      var sanctumName = document.getElementById('gateSanctumName').value.trim();
-      var errorEl = document.getElementById('gateError');
-
-      if (!email || email.indexOf('@') === -1) {
-        errorEl.textContent = 'Please enter a valid email address.';
-        errorEl.style.display = 'block';
-        return;
-      }
-      if (!firstName) {
-        errorEl.textContent = 'Please enter your first name.';
-        errorEl.style.display = 'block';
-        return;
-      }
-      errorEl.style.display = 'none';
-
-      // Save member state
-      var memberData = {
-        tier: 2,
-        email: email,
-        firstName: firstName,
-        sanctumName: sanctumName || firstName,
-        joinedAt: new Date().toISOString()
-      };
-      localStorage.setItem('sanctum_state', JSON.stringify(memberData));
-
-      // Mailchimp placeholder
-      var MAILCHIMP_URL = 'REPLACE_WITH_MAILCHIMP_URL';
-      if (MAILCHIMP_URL !== 'REPLACE_WITH_MAILCHIMP_URL') {
-        window.mailchimpCB = function(resp) { console.log('Mailchimp:', resp.result); };
-        var script = document.createElement('script');
-        script.src = MAILCHIMP_URL + '&EMAIL=' + encodeURIComponent(email) + '&FNAME=' + encodeURIComponent(firstName) + '&c=mailchimpCB';
-        document.body.appendChild(script);
-      }
-
-      document.getElementById('welcomeNameDisplay').textContent = sanctumName || firstName;
-      showStep('stepWelcome');
-    }
-
-    function enterApp() {
-      var entrance = document.getElementById('sanctumEntrance');
-      if (entrance) entrance.remove();
-      updateTierUI();
-      try { lucide.createIcons(); } catch(e) {}
-      renderShop();
-      renderMonographs();
-      renderInteractions();
-    }
-
-    function showWelcomeBack(name) {
-      document.getElementById('welcomeNameDisplay').textContent = name || 'Welcome back';
-      showStep('stepWelcome');
-      setTimeout(function() { enterApp(); }, 2500);
-    }
-
-    function closeDisclaimer() { showStep('stepGate'); }
-    function showEmailGate() { showStep('stepGate'); }
-
-    // ── WINDOW ONLOAD ──────────────────────────────────────────────────────
-    window.onload = function() {
-      // Check returning member
-      try {
-        var member = localStorage.getItem('sanctum_state');
-        if (member) {
-          var data = JSON.parse(member);
-          showWelcomeBack(data.sanctumName || data.firstName);
-        }
-      } catch(e) {}
-      // Pre-render app in background
-      try { lucide.createIcons(); } catch(e) {}
-      renderShop();
-      renderMonographs();
-      renderInteractions();
-    };
-
-    function switchTab(tabId) {
-      document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
-      document.querySelectorAll('.nav-btn').forEach(btn => {
-        btn.classList.remove('bg-purple-800', 'text-white', 'shadow-md');
-        btn.classList.add('text-purple-200/80', 'hover:bg-purple-900', 'hover:text-white');
-      });
-
-      document.getElementById('tab-' + tabId).classList.remove('hidden');
-      const activeBtn = document.getElementById('tabBtn-' + tabId);
-      activeBtn.classList.remove('text-purple-200/80', 'hover:bg-purple-900', 'hover:text-white');
-      activeBtn.classList.add('bg-purple-800', 'text-white', 'shadow-md');
-    }
-
-    function filterChakra(chakra) {
-      document.getElementById('shopChakraFilter').value = chakra;
-      renderShop();
-    }
-
-    function setPricingMode(mode) {
-      currentPricingMode = mode;
-      
-      const custBtn = document.getElementById('mode-customer');
-      const pracBtn = document.getElementById('mode-practitioner');
-
-      if (mode === 'customer') {
-        custBtn.className = "px-4 py-2 text-xs font-bold rounded-xl transition-all bg-purple-800 text-white shadow-md";
-        pracBtn.className = "px-4 py-2 text-xs font-bold rounded-xl transition-all flex items-center gap-1.5 text-stone-600 hover:text-stone-900";
-      } else {
-        pracBtn.className = "px-4 py-2 text-xs font-bold rounded-xl transition-all flex items-center gap-1.5 bg-amber-800 text-white shadow-md";
-        custBtn.className = "px-4 py-2 text-xs font-bold rounded-xl transition-all text-stone-600 hover:text-stone-900";
-      }
-      renderShop();
-    }
-
-    function updateDashboardStats() {
-      let totalRetail = 0;
-      let totalWholesale = 0;
-
-      HERBS_DATABASE.forEach(h => {
-        const prices = customPrices[h.name];
-        totalRetail += prices.oz4;
-        totalWholesale += h.wholesaleCostOz * 4;
-      });
-
-      const avgMargin = totalRetail > 0 ? ((totalRetail - totalWholesale) / totalRetail) * 100 : 0;
-      
-      document.getElementById('avgGrossMarginVal').textContent = avgMargin.toFixed(1) + '%';
-      document.getElementById('avgWholesaleCostVal').textContent = '$' + (totalWholesale / HERBS_DATABASE.length).toFixed(2);
-    }
-
-    function handleWeightChange(herbName, sizeKey) {
-      selectedWeights[herbName] = sizeKey;
-      renderShop();
-    }
-
-    function handlePriceOverride(herbName, sizeKey, value) {
-      const parsed = parseFloat(value) || 0;
-      customPrices[herbName][sizeKey] = parsed;
-      renderShop();
-    }
-
-    function getInteractionsForHerb(herbName) {
-      const results = [];
-      PHARMACEUTICAL_INTERACTIONS.forEach(drug => {
-        const matching = drug.interactions.find(i => i.herb.toLowerCase() === herbName.toLowerCase());
-        if (matching) {
-          results.push({
-            drugName: drug.drugName,
-            class: drug.class,
-            severity: matching.severity,
-            effect: matching.effect
-          });
-        }
-      });
-      return results;
-    }
-
-    function renderShop() {
-      const searchVal = document.getElementById('shopSearch').value.toLowerCase();
-      const chakraVal = document.getElementById('shopChakraFilter').value;
-      const grid = document.getElementById('shopCardsGrid');
-      grid.innerHTML = '';
-
-      const filtered = HERBS_DATABASE.filter(h => {
-        const matchesSearch = h.name.toLowerCase().includes(searchVal) || h.category.toLowerCase().includes(searchVal);
-        const matchesChakra = chakraVal === 'All' || h.chakra === chakraVal;
-        return matchesSearch && matchesChakra;
-      });
-
-      filtered.forEach(herb => {
-        const activeSize = selectedWeights[herb.name] || 'oz4';
-        const activePrices = customPrices[herb.name];
-        const activePrice = activePrices[activeSize];
-        
-        const multiplier = activeSize === 'oz1' ? 1 : activeSize === 'oz2' ? 2 : activeSize === 'oz4' ? 4 : 8;
-        const actualWholesale = herb.wholesaleCostOz * multiplier;
-        const profit = activePrice - actualWholesale;
-        const margin = activePrice > 0 ? (profit / activePrice) * 100 : 0;
-        const interactions = getInteractionsForHerb(herb.name);
-
-        const card = document.createElement('div');
-        card.className = "bg-white rounded-3xl border border-stone-200 overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col justify-between";
-        
-        let pricingHTML = '';
-        if (true) { // Always customer view on public site
-          pricingHTML = `
-            <div class="bg-stone-50 p-6 border-t border-stone-100 flex justify-between items-center">
-              <div>
-                <span class="text-[10px] text-stone-400 block uppercase font-bold tracking-wider">Apothecary Retail Price</span>
-                <span class="text-2xl font-extrabold text-stone-900 font-mono tracking-tight">$${activePrice.toFixed(2)}</span>
-              </div>
-              <button onclick="openMonographDrawer('${herb.name}')" class="bg-purple-800 hover:bg-purple-900 text-white px-4 py-2 text-xs font-bold rounded-xl shadow transition-all flex items-center gap-1">
-                <span>Explore Actions</span> <i data-lucide="chevron-right" class="w-4 h-4"></i>
-              </button>
-            </div>
-          `;
-        } else {
-          pricingHTML = `
-            <div class="bg-amber-50/40 p-6 border-t border-amber-100 space-y-4">
-              <div class="space-y-1.5">
-                <label class="text-[10px] uppercase font-bold text-amber-800 flex justify-between">
-                  <span>Simulated Angel Retail Price ($)</span>
-                  <span class="font-mono text-xs">Alignment pattern: ${herb.pattern}</span>
-                </label>
-                <input 
-                  type="number" 
-                  step="0.11"
-                  class="w-full bg-white border border-amber-200 rounded-xl px-3 py-1.5 text-sm font-bold font-mono text-stone-850"
-                  value="${activePrice}" 
-                  oninput="handlePriceOverride('${herb.name}', '${activeSize}', this.value)"
-                />
-              </div>
-
-              <div class="grid grid-cols-3 gap-2 pt-2 border-t border-amber-200/50">
-                <div class="text-center p-2 bg-white rounded-xl border border-amber-100">
-                  <span class="text-[9px] text-stone-400 block uppercase font-bold">Cost</span>
-                  <span class="text-xs font-bold font-mono text-stone-700">$${actualWholesale.toFixed(2)}</span>
-                </div>
-                <div class="text-center p-2 bg-white rounded-xl border border-amber-100">
-                  <span class="text-[9px] text-stone-400 block uppercase font-bold">Net Profit</span>
-                  <span class="text-xs font-bold font-mono text-purple-700">$${profit.toFixed(2)}</span>
-                </div>
-                <div class="text-center p-2 bg-white rounded-xl border border-amber-100">
-                  <span class="text-[9px] text-stone-400 block uppercase font-bold">Margin</span>
-                  <span class="text-xs font-extrabold text-amber-700 font-mono">${margin.toFixed(1)}%</span>
-                </div>
-              </div>
-            </div>
-          `;
-        }
-
-        const warningHTML = interactions.length > 0 
-          ? `<div class="px-6 py-2 bg-amber-50 border-t border-amber-100 flex items-center gap-1.5 text-[10px] text-amber-900">
-              <i data-lucide="alert-triangle" class="w-3 h-3 text-amber-600 flex-shrink-0"></i>
-              <span>Safety alert: Cross-reference is required for ${interactions.length} clinical drugs</span>
-             </div>`
-          : '';
-
-        card.innerHTML = `
-          <div class="p-6 pb-4 space-y-3">
-            <div class="flex justify-between items-start">
-              <div>
-                <span class="text-[10px] uppercase font-extrabold tracking-wider text-fuchsia-600 block">${herb.category}</span>
-                <h3 class="text-xl font-bold text-stone-850 mt-1">${herb.name}</h3>
-              </div>
-              <span class="px-2.5 py-0.5 text-[10px] font-bold rounded-md border uppercase bg-purple-50 text-purple-800 border-purple-100">
-                ${herb.chakra}
-              </span>
-            </div>
-            <p class="text-stone-500 text-xs leading-relaxed italic">"${herb.notes}"</p>
-
-            <div class="pt-2">
-              <span class="text-[9px] uppercase font-bold text-stone-400 block tracking-widest mb-1.5">Select Purchase Bag Size</span>
-              <div class="grid grid-cols-4 gap-1.5">
-                <button onclick="handleWeightChange('${herb.name}', 'oz1')" class="py-1.5 px-2 text-xs rounded-xl font-bold border ${activeSize === 'oz1' ? 'bg-purple-800 text-white border-emerald-800 shadow-sm' : 'bg-stone-50 text-stone-600 border-stone-200'}">1 oz</button>
-                <button onclick="handleWeightChange('${herb.name}', 'oz2')" class="py-1.5 px-2 text-xs rounded-xl font-bold border ${activeSize === 'oz2' ? 'bg-purple-800 text-white border-emerald-800 shadow-sm' : 'bg-stone-50 text-stone-600 border-stone-200'}">2 oz</button>
-                <button onclick="handleWeightChange('${herb.name}', 'oz4')" class="py-1.5 px-2 text-xs rounded-xl font-bold border ${activeSize === 'oz4' ? 'bg-purple-800 text-white border-emerald-800 shadow-sm' : 'bg-stone-50 text-stone-600 border-stone-200'}">4 oz</button>
-                <button onclick="handleWeightChange('${herb.name}', 'oz8')" class="py-1.5 px-2 text-xs rounded-xl font-bold border ${activeSize === 'oz8' ? 'bg-purple-800 text-white border-emerald-800 shadow-sm' : 'bg-stone-50 text-stone-600 border-stone-200'}">8 oz</button>
-              </div>
-            </div>
-          </div>
-          ${pricingHTML}
-          ${warningHTML}
-        `;
-        grid.appendChild(card);
-      });
-      try { lucide.createIcons(); } catch(e) {}
-    }
-
-    function renderMonographs() {
-      const searchVal = document.getElementById('monographSearch').value.toLowerCase();
-      const grid = document.getElementById('monographsGrid');
-      grid.innerHTML = '';
-
-      const filtered = HERBS_DATABASE.filter(h => h.name.toLowerCase().includes(searchVal) || h.properties.toLowerCase().includes(searchVal));
-
-      filtered.forEach(herb => {
-        const card = document.createElement('div');
-        card.className = "bg-white p-6 rounded-3xl border border-stone-200 hover:border-purple-300 hover:shadow-xl transition-all cursor-pointer flex flex-col justify-between group";
-        card.onclick = () => openMonographDrawer(herb.name);
-        
-        card.innerHTML = `
-          <div class="space-y-4">
-            <div class="flex justify-between items-start">
-              <div>
-                <h3 class="text-xl font-bold text-stone-850 group-hover:text-purple-800 transition-colors">${herb.name}</h3>
-                <span class="text-[10px] uppercase font-extrabold tracking-wider text-fuchsia-600 block mt-0.5">${herb.category}</span>
-              </div>
-              <span class="px-2.5 py-1 text-xs font-bold rounded-lg bg-purple-50 text-purple-800 border border-emerald-100">${herb.chakra}</span>
-            </div>
-            <p class="text-stone-600 text-xs line-clamp-2 italic leading-relaxed">"${herb.notes}"</p>
-            <div class="space-y-1">
-              <span class="text-[10px] uppercase font-bold text-stone-400 block">Actions</span>
-              <p class="text-stone-700 text-xs line-clamp-2 leading-relaxed">${herb.properties}</p>
-            </div>
-          </div>
-          <div class="pt-4 mt-4 border-t border-stone-100 flex items-center justify-between">
-            <span class="text-xs font-bold text-purple-800 group-hover:underline flex items-center gap-0.5">
-              Inspect Monograph <i data-lucide="chevron-right" class="w-4 h-4"></i>
-            </span>
-          </div>
-        `;
-        grid.appendChild(card);
-      });
-      try { lucide.createIcons(); } catch(e) {}
-    }
-
-    function renderInteractions() {
-      const searchVal = document.getElementById('interactionSearch').value.toLowerCase();
-      const container = document.getElementById('interactionsContainer');
-      container.innerHTML = '';
-
-      const filtered = PHARMACEUTICAL_INTERACTIONS.filter(drug => drug.drugName.toLowerCase().includes(searchVal) || drug.class.toLowerCase().includes(searchVal));
-
-      filtered.forEach(drug => {
-        const card = document.createElement('div');
-        card.className = "bg-white rounded-3xl border border-stone-200 p-6 space-y-4";
-        
-        let subItems = '';
-        drug.interactions.forEach(inter => {
-          const badgeColor = inter.severity === 'Major' ? 'bg-red-50 text-red-800 border-red-200' : 'bg-amber-50 text-amber-800 border-amber-200';
-          subItems += `
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-center p-4 bg-stone-50 rounded-2xl border border-stone-200/60 hover:border-stone-300 transition-colors gap-3">
-              <div class="space-y-1">
-                <button onclick="openMonographDrawer('${inter.herb}')" class="font-bold text-purple-800 hover:text-purple-950 underline decoration-dashed hover:decoration-solid block text-left">
-                  ${inter.herb}
-                </button>
-                <p class="text-xs text-stone-600 leading-relaxed">${inter.effect}</p>
-              </div>
-              <span class="px-2.5 py-1 text-[11px] font-extrabold uppercase rounded-lg border flex items-center gap-1 self-start md:self-auto ${badgeColor}">
-                <i data-lucide="alert-triangle" class="w-3.5 h-3.5"></i> ${inter.severity} Risk
-              </span>
-            </div>
-          `;
-        });
-
-        card.innerHTML = `
-          <div class="flex flex-col md:flex-row justify-between md:items-center gap-2 border-b border-stone-100 pb-4">
-            <div>
-              <h3 class="text-xl font-extrabold text-stone-850">${drug.drugName}</h3>
-              <p class="text-xs text-stone-500">${drug.class} • <strong class="text-stone-700">Treating:</strong> ${drug.treating}</p>
-            </div>
-            <span class="px-3 py-1 bg-stone-100 text-stone-700 font-mono text-xs rounded-lg self-start md:self-auto font-bold">
-              ${drug.interactions.length} active warnings logged
-            </span>
-          </div>
-          <div class="grid gap-3">${subItems}</div>
-        `;
-        container.appendChild(card);
-      });
-      try { lucide.createIcons(); } catch(e) {}
-    }
-
-    function openMonographDrawer(herbName) {
-      const herb = HERBS_DATABASE.find(h => h.name.toLowerCase() === herbName.toLowerCase());
-      if (!herb) return;
-
-      document.getElementById('drawerHerbName').textContent = herb.name;
-      document.getElementById('drawerChakraBadge').textContent = herb.chakra + " Chakra · " + herb.category;
-      document.getElementById('drawerHerbNotes').textContent = `"${herb.notes}"`;
-      document.getElementById('drawerConstituents').textContent = herb.constituents;
-      document.getElementById('drawerProperties').textContent = herb.properties;
-      document.getElementById('drawerContraindications').textContent = herb.contraindications;
-      document.getElementById('drawerPrep').textContent = herb.prep;
-      document.getElementById('drawerMenstruum').textContent = herb.menstruum;
-      document.getElementById('drawerCostVal').textContent = "$" + herb.wholesaleCostOz.toFixed(2);
-
-      const warnings = getInteractionsForHerb(herb.name);
-      const warningBox = document.getElementById('drawerWarningsBox');
-      const warningList = document.getElementById('drawerWarningsList');
-      warningList.innerHTML = '';
-
-      if (warnings.length > 0) {
-        warningBox.classList.remove('hidden');
-        warnings.forEach(w => {
-          const item = document.createElement('div');
-          item.className = "pt-2 text-xs flex justify-between gap-4";
-          item.innerHTML = `
-            <div>
-              <strong class="text-amber-900">${w.drugName}</strong> (${w.class})
-              <p class="text-stone-600 mt-0.5">${w.effect}</p>
-            </div>
-            <span class="text-[10px] font-extrabold uppercase text-red-800 self-start">${w.severity}</span>
-          `;
-          warningList.appendChild(item);
-        });
-      } else {
-        warningBox.classList.add('hidden');
-      }
-
-      document.getElementById('monographDrawer').classList.remove('translate-x-full');
-      document.getElementById('drawerBackdrop').classList.remove('hidden');
-      try { lucide.createIcons(); } catch(e) {}
-    }
-
-    function closeMonographDrawer() {
-      document.getElementById('monographDrawer').classList.add('translate-x-full');
-      document.getElementById('drawerBackdrop').classList.add('hidden');
-    }
-  </script>
+  });
+  return results;
+}
+ 
+function renderInteractions() {
+  var search = document.getElementById('drugSearch').value.toLowerCase();
+  var list = document.getElementById('interactionList');
+  if (!list) return;
+  list.innerHTML = '';
+ 
+  var filtered = DRUGS.filter(function(d) {
+    return d.name.toLowerCase().includes(search) || d.cls.toLowerCase().includes(search);
+  });
+ 
+  filtered.forEach(function(drug) {
+    var card = document.createElement('div');
+    card.className = 'drug-card';
+    var rows = drug.interactions.map(function(i) {
+      var sevClass = i.sev === 'Major' ? 'severity-major' : i.sev === 'Moderate' ? 'severity-moderate' : 'severity-minor';
+      return '<div class="interaction-row">' +
+        '<div><button onclick="openDrawer(\'' + i.herb.replace(/'/g,"\\'") + '\')" style="background:none;border:none;color:#6d28d9;font-weight:700;font-size:13px;cursor:pointer;text-decoration:underline;text-decoration-style:dashed;padding:0;">' + i.herb + '</button>' +
+        '<p style="font-size:12px;color:#57534e;margin-top:4px;line-height:1.5;">' + i.effect + '</p></div>' +
+        '<span class="' + sevClass + '">' + i.sev + ' Risk</span></div>';
+    }).join('');
+ 
+    card.innerHTML =
+      '<div style="display:flex;justify-content:space-between;align-items:flex-start;padding-bottom:14px;border-bottom:1px solid #e7e5e4;margin-bottom:14px;flex-wrap:wrap;gap:8px;">' +
+        '<div><h3 style="font-size:18px;font-weight:800;color:#1c1917;">' + drug.name + '</h3>' +
+        '<p style="font-size:12px;color:#78716c;">' + drug.cls + ' · <strong style="color:#57534e;">Treating:</strong> ' + drug.treating + '</p></div>' +
+        '<span style="font-family:monospace;font-size:11px;font-weight:700;background:#f5f5f4;color:#57534e;padding:4px 12px;border-radius:8px;">' + drug.interactions.length + ' warnings</span>' +
+      '</div>' + rows;
+    list.appendChild(card);
+  });
+}
+ 
+// ── TEASER EMAILS ─────────────────────────────────────────────────────────
+function submitTeaser(type) {
+  var emailEl = document.getElementById(type === 'elixir' ? 'elixirEmail' : 'challengeEmail');
+  var successEl = document.getElementById(type === 'elixir' ? 'elixirSuccess' : 'challengeSuccess');
+  var email = emailEl.value.trim();
+  if (!email || email.indexOf('@') < 0) {
+    emailEl.style.borderColor = 'rgba(239,68,68,0.6)';
+    setTimeout(function() { emailEl.style.borderColor = ''; }, 2000);
+    return;
+  }
+  var key = type === 'elixir' ? 'sanctum_elixir_list' : 'sanctum_challenge_list';
+  var list = JSON.parse(localStorage.getItem(key) || '[]');
+  list.push({ email: email, joinedAt: new Date().toISOString() });
+  localStorage.setItem(key, JSON.stringify(list));
+  emailEl.value = '';
+  successEl.style.display = 'block';
+}
+ 
+// ── TOAST ─────────────────────────────────────────────────────────────────
+function showToast(msg) {
+  var t = document.createElement('div');
+  t.style.cssText = 'position:fixed;top:24px;left:50%;transform:translateX(-50%);z-index:99999;background:linear-gradient(135deg,#7e22ce,#c026d3);color:white;font-size:13px;font-weight:700;padding:12px 24px;border-radius:20px;box-shadow:0 4px 20px rgba(109,40,217,0.4);letter-spacing:1px;';
+  t.textContent = msg;
+  document.body.appendChild(t);
+  setTimeout(function() { t.remove(); }, 3500);
+}
+ 
+// ── PWA ───────────────────────────────────────────────────────────────────
+var deferredPrompt = null;
+window.addEventListener('beforeinstallprompt', function(e) {
+  e.preventDefault();
+  deferredPrompt = e;
+  if (!localStorage.getItem('sanctum_install_dismissed')) {
+    setTimeout(function() { document.getElementById('pwaBanner').style.display = 'block'; }, 5000);
+  }
+});
+function installPWA() {
+  if (deferredPrompt) {
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then(function() { deferredPrompt = null; dismissInstall(); });
+  } else {
+    alert('To install on iOS: tap Share → Add to Home Screen 🌿');
+    dismissInstall();
+  }
+}
+function dismissInstall() {
+  localStorage.setItem('sanctum_install_dismissed', 'true');
+  document.getElementById('pwaBanner').style.display = 'none';
+}
+ 
+// ── QA RESET ─────────────────────────────────────────────────────────────
+function qaReset() {
+  if (confirm('Reset to fresh visitor view? Clears all member data.')) {
+    localStorage.clear();
+    sessionStorage.clear();
+    location.reload();
+  }
+}
+ 
+// ── OWNER MODE ────────────────────────────────────────────────────────────
+function checkOwnerMode() {
+  var params = new URLSearchParams(window.location.search);
+  if (params.get('owner') === 'true') {
+    setMember({ tier: 3, email: 'blossomsmedicinalgardens@gmail.com', firstName: 'Aris', sanctumName: 'The Keeper', ownerMode: true, joinedAt: new Date().toISOString() });
+    var badge = document.createElement('div');
+    badge.style.cssText = 'position:fixed;top:12px;right:12px;z-index:99999;background:linear-gradient(135deg,#7e22ce,#c026d3);color:white;font-size:9px;font-weight:700;letter-spacing:2px;padding:4px 12px;border-radius:20px;text-transform:uppercase;';
+    badge.textContent = '✦ Owner Mode';
+    document.body.appendChild(badge);
+  }
+}
+ 
+// ── INIT ──────────────────────────────────────────────────────────────────
+window.onload = function() {
+  checkOwnerMode();
+  var member = getMember();
+  if (member) {
+    showWelcomeBack(member.sanctumName || member.firstName);
+  }
+  renderShop();
+  renderMonographs();
+  renderInteractions();
+  updateTierUI();
+  showInteractionTab();
+};
+ 
+</script>
 </body>
 </html>
